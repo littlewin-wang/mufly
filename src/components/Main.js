@@ -5,6 +5,7 @@ import React from 'react';
 import API from '../api'
 
 import GithubLink from './githubLink'
+import Footer from './footer'
 
 export default class AppComponent extends React.Component {
   componentDidMount() {
@@ -19,6 +20,7 @@ export default class AppComponent extends React.Component {
     return (
       <div className="index">
         <GithubLink />
+        <Footer />
       </div>
     );
   }
