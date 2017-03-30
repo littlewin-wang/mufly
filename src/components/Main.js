@@ -4,9 +4,9 @@ require('styles/App.css');
 import React from 'react';
 import API from '../api'
 
-let yeomanImage = require('../images/yeoman.png');
+import GithubLink from './githubLink'
 
-class AppComponent extends React.Component {
+export default class AppComponent extends React.Component {
   componentDidMount() {
     API.releatedArtists('2elBjNSdBE2Y3f0j1mjrql').then(res => {
       if (res.statusText === 'OK') {
@@ -18,8 +18,7 @@ class AppComponent extends React.Component {
   render() {
     return (
       <div className="index">
-        <img src={yeomanImage} alt="Yeoman Generator" />
-        <div className="notice">Please edit <code>src/components/Main.js</code> to get started!</div>
+        <GithubLink />
       </div>
     );
   }
@@ -27,5 +26,3 @@ class AppComponent extends React.Component {
 
 AppComponent.defaultProps = {
 };
-
-export default AppComponent;

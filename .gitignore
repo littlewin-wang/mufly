@@ -2,6 +2,9 @@
 logs
 *.log
 
+# Mac
+.DS_Store
+
 # Runtime data
 pids
 *.pid
@@ -31,3 +34,4 @@ bower_components/
 
 # IDE/Editor data
 .idea
+.vscode
