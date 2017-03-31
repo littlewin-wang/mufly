@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default class AppComponent extends React.Component {
+export default class GithubLink extends React.Component {
   render() {
     return (
       <a id="github-link" href="https://github.com/littlewin-wang/mufly">
