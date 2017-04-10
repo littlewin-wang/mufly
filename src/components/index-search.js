@@ -1,7 +1,7 @@
-require('normalize.css/normalize.css');
-require('styles/App.css');
+require('normalize.css/normalize.css')
+require('styles/App.css')
 
-import React from 'react';
+import React from 'react'
 import API from '../api'
 
 import GithubLink from './githubLink'
