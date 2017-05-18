@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default class Footer extends React.Component {
-  render() {
+  render () {
     return (
       <footer id="footer">
         <h4>

@@ -2,26 +2,26 @@ import React from 'react'
 import classNames from 'classnames'
 
 export default class RecentSearch extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       selected: null
     }
   }
 
-  clickHandler(id) {
+  clickHandler (id) {
     this.setState({ selected: id })
     // this.props.actions.updateUrl(id)
   }
 
-  renderItems() {
+  renderItems () {
     return this.props.recent.map( (recent, index) => {
       let artistName = recent.name
 
       // Append a comma to all artists except the final one.
       const isLastItem = this.props.recent.length - index > 1
 
-      const isHidden = this.state.selected && this.state.selected !== recent.id;
+      const isHidden = this.state.selected && this.state.selected !== recent.id
       const classes = classNames({
         faded: isHidden
       })
@@ -37,7 +37,7 @@ export default class RecentSearch extends React.Component {
     })
   }
 
-  render() {
+  render () {
     return (
       <div id="recent-searches">
         <h5 className="heading">Recent Searches</h5>

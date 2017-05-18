@@ -1,14 +1,14 @@
 require('normalize.css/normalize.css')
-require('styles/App.css')
+require('styles/base.css')
 
 import React from 'react'
-import API from '../api'
+import API from '../../helpers/api'
 
-import GithubLink from './githubLink'
-import Footer from './footer'
+import GithubLink from '../GithubLink/GithubLink'
+import Footer from '../Footer/Footer'
 
-export default class AppComponent extends React.Component {
-  componentDidMount() {
+export default class IndexSearch extends React.Component {
+  componentDidMount () {
     API.releatedArtists('2elBjNSdBE2Y3f0j1mjrql').then(res => {
       if (res.statusText === 'OK') {
         console.log(res.data)
@@ -16,15 +16,15 @@ export default class AppComponent extends React.Component {
     })
   }
 
-  render() {
+  render () {
     return (
       <div className="index">
         <GithubLink />
         <Footer />
       </div>
-    );
+    )
   }
 }
 
-AppComponent.defaultProps = {
-};
+IndexSearch.defaultProps = {
+}

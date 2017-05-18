@@ -1,20 +1,18 @@
 /**
- * Function that returns default values.
- * Used because Object.assign does a shallow instead of a deep copy.
- * Using [].push will add to the base array, so a require will alter
- * the base array output.
+ * Return the default values.
  */
-'use strict';
 
-const path = require('path');
-const srcPath = path.join(__dirname, '/../src');
-const dfltPort = 8000;
+'use strict'
+
+const path = require('path')
+const srcPath = path.join(__dirname, '/../src')
+const defaultPort = 8080
 
 /**
- * Get the default modules object for webpack
+ * Get the default modules for webpack
  * @return {Object}
  */
-function getDefaultModules() {
+function getDefaultModules () {
   return {
     preLoaders: [
       {
@@ -29,19 +27,19 @@ function getDefaultModules() {
         loader: 'style-loader!css-loader'
       },
       {
-        test: /\.sass/,
+        test: /\.sass$/,
         loader: 'style-loader!css-loader!sass-loader?outputStyle=expanded&indentedSyntax'
       },
       {
-        test: /\.scss/,
+        test: /\.scss$/,
         loader: 'style-loader!css-loader!sass-loader?outputStyle=expanded'
       },
       {
-        test: /\.less/,
+        test: /\.less$/,
         loader: 'style-loader!css-loader!less-loader'
       },
       {
-        test: /\.styl/,
+        test: /\.styl$/,
         loader: 'style-loader!css-loader!stylus-loader'
       },
       {
@@ -53,12 +51,12 @@ function getDefaultModules() {
         loader: 'file-loader'
       }
     ]
-  };
+  }
 }
 
 module.exports = {
   srcPath: srcPath,
   publicPath: '/assets/',
-  port: dfltPort,
+  port: defaultPort,
   getDefaultModules: getDefaultModules
-};
+}

@@ -1,25 +1,27 @@
-'use strict';
+'use strict'
 
-let path = require('path');
-let webpack = require('webpack');
+require('shelljs/global')
+let path = require('path')
+let shell = require('shelljs')
+let webpack = require('webpack')
 
-let baseConfig = require('./base');
-let defaultSettings = require('./defaults');
+let baseConfig = require('./base')
+let defaultSettings = require('./defaults')
 
-// Add needed plugins here
-let BowerWebpackPlugin = require('bower-webpack-plugin');
+var distPath = path.join(__dirname, '../dist')
+shell.rm('-rf', distPath)
+shell.mkdir('-p', distPath)
+shell.cp('-R', 'static/*', distPath)
+shell.cp('src/index.html', distPath)
 
 let config = Object.assign({}, baseConfig, {
   entry: path.join(__dirname, '../src/index'),
   cache: false,
-  devtool: 'sourcemap',
+  devtool: 'cheap-source-map',
   plugins: [
     new webpack.optimize.DedupePlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"'
-    }),
-    new BowerWebpackPlugin({
-      searchResolveModulesDirectories: false
     }),
     new webpack.optimize.UglifyJsPlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
@@ -27,7 +29,7 @@ let config = Object.assign({}, baseConfig, {
     new webpack.NoErrorsPlugin()
   ],
   module: defaultSettings.getDefaultModules()
-});
+})
 
 // Add needed loaders to the defaults here
 config.module.loaders.push({
@@ -37,6 +39,6 @@ config.module.loaders.push({
     config.additionalPaths,
     [ path.join(__dirname, '/../src') ]
   )
-});
+})
 
-module.exports = config;
+module.exports = config

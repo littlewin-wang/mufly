@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default class GithubLink extends React.Component {
-  render() {
+  render () {
     return (
       <a id="github-link" href="https://github.com/littlewin-wang/mufly">
         <svg height="26" width="26" viewBox="0 0 16 16">

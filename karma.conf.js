@@ -1,6 +1,6 @@
 var webpackCfg = require('./webpack.config');
 
-// Set node environment to testing
+// Set node environment to test
 process.env.NODE_ENV = 'test';
 
 module.exports = function(config) {
@@ -8,9 +8,9 @@ module.exports = function(config) {
     basePath: '',
     browsers: [ 'PhantomJS' ],
     files: [
-      'test/loadtests.js'
+      'test/loadTests.js'
     ],
-    port: 8000,
+    port: 8080,
     captureTimeout: 60000,
     frameworks: [ 'mocha', 'chai' ],
     client: {
@@ -19,7 +19,7 @@ module.exports = function(config) {
     singleRun: true,
     reporters: [ 'mocha', 'coverage' ],
     preprocessors: {
-      'test/loadtests.js': [ 'webpack', 'sourcemap' ]
+      'test/loadTests.js': [ 'webpack', 'sourcemap' ]
     },
     webpack: webpackCfg,
     webpackServer: {
@@ -32,5 +32,5 @@ module.exports = function(config) {
         { type: 'text' }
       ]
     }
-  });
-};
+  })
+}

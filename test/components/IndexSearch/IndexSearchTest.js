@@ -1,22 +1,22 @@
 /*eslint-env node, mocha */
 /*global expect */
 /*eslint no-console: 0*/
-'use strict';
+'use strict'
 
 // Uncomment the following lines to use the react test utilities
 // import React from 'react/addons';
 // const TestUtils = React.addons.TestUtils;
-import createComponent from 'helpers/shallowRenderHelper';
+import createComponent from 'helpers/shallowRenderHelper'
 
-import Main from 'components/Main';
+import { IndexSearch } from 'components'
 
-describe('MainComponent', function () {
+describe('IndexSearch', function () {
 
   beforeEach(function () {
-    this.MainComponent = createComponent(Main);
-  });
+    this.IndexSearch = createComponent(IndexSearch)
+  })
 
   it('should have its component name as default className', function () {
-    expect(this.MainComponent.props.className).to.equal('index');
-  });
-});
+    expect(this.IndexSearch.props.className).to.equal('index')
+  })
+})
