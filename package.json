@@ -1,7 +1,7 @@
 {
-  "name": "react-webpack-simple",
+  "name": "Mufly",
   "version": "1.0.0",
-  "description": "A simple Webpack + react-loader setup for quick prototyping.",
+  "description": "Discover artists through an infinite node graph on Spotify.",
   "main": "",
   "scripts": {
     "build": "webpack --env=build",
