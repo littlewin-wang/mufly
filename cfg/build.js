@@ -13,6 +13,7 @@ shell.rm('-rf', distPath)
 shell.mkdir('-p', distPath)
 shell.cp('-R', 'static/*', distPath)
 shell.cp('src/index.html', distPath)
+shell.cp('src/favicon.ico', distPath)
 
 let config = Object.assign({}, baseConfig, {
   entry: path.join(__dirname, '../src/index'),
