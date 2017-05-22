@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import classNames from 'classnames'
 
 export default class RecentSearch extends React.Component {
@@ -9,40 +9,38 @@ export default class RecentSearch extends React.Component {
     }
   }
 
-  clickHandler (id) {
-    this.setState({ selected: id })
-    // this.props.actions.updateUrl(id)
+  static propTypes = {
+    recents: PropTypes.array
   }
 
-  renderItems () {
-    return this.props.recent.map( (recent, index) => {
-      let artistName = recent.name
+  static defaultProps = {
+    recents: []
+  }
 
-      // Append a comma to all artists except the final one.
-      const isLastItem = this.props.recent.length - index > 1
-
-      const isHidden = this.state.selected && this.state.selected !== recent.id
-      const classes = classNames({
-        faded: isHidden
-      })
-
-      return (
-        <li key={index} className={classes}>
-          <a onClick={ () => this.clickHandler(recent.spotifyArtistId) }>
-            {artistName}
-          </a>
-          {isLastItem ? ',' : '.'}
-        </li>
-      )
-    })
+  clickHandler (id) {
+    this.setState({ selected: id })
   }
 
   render () {
+    let { recents } = this.props
+
     return (
-      <div id="recent-searches">
+      <div className="recent-search">
         <h5 className="heading">Recent Searches</h5>
         <ul>
-          { this.props.recent ? this.renderItems() : null }
+          {recents.map( (recent, index) => (
+            <li
+              className={classNames({
+                faded: this.state.selected && this.state.selected !== recent.id
+              })}
+              key={index}
+            >
+              <a onClick={ () => this.clickHandler(recent.id) }>
+                {recent.name}
+              </a>
+              {recents.length - index > 1 ? ',' : '.'}
+            </li>
+          ))}
         </ul>
       </div>
     )
