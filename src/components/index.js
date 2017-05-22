@@ -7,7 +7,6 @@
 
 export Footer from './Footer/Footer'
 export GithubLink from './GithubLink/GithubLink'
-export IndexGraph from './IndexGraph/IndexGraph'
-export IndexSearch from './IndexSearch/IndexSearch'
 export RecentSearch from './RecentSearch/RecentSearch'
-export SearchLine from './SearchLine/SearchLine'
+export SearchBox from './SearchBox/SearchBox'
+export Suggestions from './Suggestions/Suggestions'
