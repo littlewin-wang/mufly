@@ -1,13 +1,12 @@
 import React, { PropTypes } from 'react'
 import classNames from 'classnames'
-// import Spinner from 'react-activity/lib/Spinner'
 
 export default class Suggestions extends React.Component {
   static propTypes = {
     suggestions: PropTypes.array,
     selectedIndex: PropTypes.number,
     confirmedIndex: PropTypes.number,
-    clickFun: PropTypes.func
+    clickHandler: PropTypes.func
   }
 
   static defaultProps = {
@@ -17,7 +16,7 @@ export default class Suggestions extends React.Component {
   }
 
   render () {
-    let { suggestions, selectedIndex, confirmedIndex, clickFun } = this.props
+    let { suggestions, selectedIndex, confirmedIndex, clickHandler, fatherRef} = this.props
 
     return (
       <div className="suggestions">
@@ -29,7 +28,7 @@ export default class Suggestions extends React.Component {
               confirmedIndex === i ? 'confirmed' : null
             ])}
             key={suggestion.id}
-            onClick={clickFun.bind(this, i)}
+            onClick={clickHandler.bind(fatherRef, i)}
           >
             { suggestion.name }
           </div>
