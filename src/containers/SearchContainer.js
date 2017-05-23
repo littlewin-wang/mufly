@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React  from 'react'
 import { SearchBox, RecentSearch, GithubLink, Footer } from 'components'
 
 export default class SearchContainer extends React.Component {

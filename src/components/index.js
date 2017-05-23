@@ -5,6 +5,7 @@
  *
  */
 
+export Back from './Back/Back'
 export Footer from './Footer/Footer'
 export GithubLink from './GithubLink/GithubLink'
 export RecentSearch from './RecentSearch/RecentSearch'
