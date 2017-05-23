@@ -1,0 +1,110 @@
+.search-wrapper
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  margin: auto
+  z-index: 1
+  width: 33%
+  min-width: 440px
+  height: 100%
+  padding: 0 40px
+  color: #d5dfe1
+
+  header
+    position: relative
+    top: 0
+    left: 0
+    right: 0
+    margin: auto
+    width: 100%
+    height: 200px
+    line-height: 200px
+    text-align: center
+    font-size: 80px
+    letter-spacing: -3px
+    font-weight: 700
+    color: #fff
+    text-shadow: 1px 2px 0 rgba(0, 0, 0, .2)
+    transition: 1s
+
+  h1
+    margin: 0
+    padding: 0
+    border: 0
+    font-size: 28px
+    font-weight: 300
+    line-height: 1.2em
+
+  h3
+    margin: 35px 0
+    font-size: 22px
+    font-weight: 300
+
+  .search-box
+    position: relative
+    width: 80%
+    margin-left: 10%
+
+    .search-input
+      width: 100%
+      background: transparent
+      border: none
+      outline: none
+      padding: 8px
+      font-size: 24px
+      color: #fff
+      border-bottom: 3px solid $blue
+      transition: .5s
+      &:hover
+        background: #1d2224
+        transition: .25s
+
+    .suggestions
+      position: absolute
+      width: 100%
+      z-index: 2
+
+      .suggestion
+        padding: 12px
+        background: #1d2224
+        border-bottom: 1px solid #191d1f
+        cursor: pointer
+        &:hover
+          background: #0d4a6d
+
+  .recent-search
+    position: relative
+    padding: 1.5rem 1rem
+    margin-top: 1rem
+    cursor: default
+
+    .heading
+      margin: 0 0 5px 0
+      color: #ffce28
+      font-size: 14px
+      font-weight: 700
+      text-transform: uppercase
+
+    li
+      display: inline-block
+      padding: 6px 6px 6px 0
+
+    a
+      position: relative
+      cursor: pointer
+      &:before
+        content: ""
+        position: absolute
+        left: 4px
+        right: 4px
+        bottom: -2px
+        height: 2px
+        background: $green
+        transform: translateY(3px)
+        opacity: 0
+        transition: .4s ease-out
+      &:hover:before
+        transform: translateY(0)
+        opacity: 1
+        transition: .15s ease-out

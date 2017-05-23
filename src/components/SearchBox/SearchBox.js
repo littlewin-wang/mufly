@@ -4,8 +4,6 @@ import Suggestions from '../Suggestions/Suggestions'
 
 import isNumber from 'lodash/isNumber'
 
-import 'react-activity/lib/Spinner/Spinner.css'
-
 export default class SearchBox extends React.Component {
   constructor (props) {
     super(props)
@@ -81,7 +79,8 @@ export default class SearchBox extends React.Component {
     let { loading } = this.props
     let { selectedIndex, confirmedIndex } = this.state
 
-    const suggestions = [{id: 0, name: 'zero'}, {id: 1, name: 'one'}, {id: 2, name: 'two'}, {id: 3, name: 'three'}]
+    // const suggestions = [{id: 0, name: 'zero'}, {id: 1, name: 'one'}, {id: 2, name: 'two'}, {id: 3, name: 'three'}]
+    const suggestions = []
 
     return (
       <div className="search-box">

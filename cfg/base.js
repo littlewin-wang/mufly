@@ -26,6 +26,7 @@ module.exports = {
     extensions: ['', '.js', '.jsx'],
     alias: {
       components: `${defaultSettings.srcPath}/components/`,
+      containers: `${defaultSettings.srcPath}/containers/`,
       helpers: `${defaultSettings.srcPath}/helpers/`,
       styles: `${defaultSettings.srcPath}/styles/`,
       utils: `${defaultSettings.srcPath}/utils/`
