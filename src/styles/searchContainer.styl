@@ -9,7 +9,7 @@
   min-width: 440px
   height: 100%
   padding: 0 40px
-  color: #d5dfe1
+  color: $lightgray
 
   header
     position: relative
@@ -53,11 +53,11 @@
       outline: none
       padding: 8px
       font-size: 24px
-      color: #fff
+      color: $white
       border-bottom: 3px solid $blue
       transition: .5s
       &:hover
-        background: #1d2224
+        background: darken($navy, 2%)
         transition: .25s
 
     .suggestions
@@ -67,11 +67,15 @@
 
       .suggestion
         padding: 12px
-        background: #1d2224
-        border-bottom: 1px solid #191d1f
+        background: darken($navy, 2%)
+        border-bottom: 1px solid darken($navy, 4%)
         cursor: pointer
-        &:hover
-          background: #0d4a6d
+        &:last-child
+          border-bottom: 0
+        &:hover, &.highlighted
+          background: darken($blue, 20%)
+        &.confirmed
+          background: darken($green, 10%)
 
   .recent-search
     position: relative
@@ -81,7 +85,7 @@
 
     .heading
       margin: 0 0 5px 0
-      color: #ffce28
+      color: $yellow
       font-size: 14px
       font-weight: 700
       text-transform: uppercase
@@ -89,6 +93,16 @@
     li
       display: inline-block
       padding: 6px 6px 6px 0
+      animation-name: fadeRecentItem
+      animation-duration: 500ms
+      animation-fill-mode: backwards
+      &.faded
+        opacity: 0
+        transition: opacity 1000ms ease-out
+
+    for index in 1 2 3 4 5 6 7 8 9 10 11 12
+      li:nth-child({index})
+        animation-delay: (index * 90)ms
 
     a
       position: relative
@@ -108,3 +122,9 @@
         transform: translateY(0)
         opacity: 1
         transition: .15s ease-out
+
+@keyframes fadeRecentItem
+  from
+    opacity: 0.01
+  to
+    opacity: 1
