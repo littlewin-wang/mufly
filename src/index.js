@@ -10,12 +10,10 @@ import 'styles/index.styl'
 
 // import SearchContainer from './containers/SearchContainer'
 
-import { PlayButton } from 'components'
+import { AudioPlayer } from 'components'
 
 // Render the main component into the dom
 ReactDOM.render(
-  <PlayButton showProgress={true}
-              percent={100}
-  />,
+  <AudioPlayer url={'https://p.scdn.co/mp3-preview/d3e7d359946a15b2ecb19efaa87147523e067dbc?cid=null'} />,
   document.getElementById('app')
 )

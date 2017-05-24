@@ -6,7 +6,6 @@ import PauseIcon from './svg/PauseIcon'
 import PlayIcon from './svg/PlayIcon'
 
 import range from 'lodash/range'
-import isFunction from 'lodash/isFunction'
 
 export default class PlayButton extends React.Component {
 
@@ -15,7 +14,7 @@ export default class PlayButton extends React.Component {
     showProgress: PropTypes.bool,
     percent: PropTypes.number,
     duration: PropTypes.number,
-    progress: PropTypes.object
+    buffered: PropTypes.object
   }
 
   static defaultProps = {
@@ -23,7 +22,7 @@ export default class PlayButton extends React.Component {
     showProgress: false,
     percent: 0,
     duration: 0,
-    progress: {}
+    buffered: {}
   }
 
   handleTrackClick = (e) => {
@@ -34,10 +33,6 @@ export default class PlayButton extends React.Component {
     const angle = Math.atan2(mouseY - circleCenterY, mouseX - circleCenterX)
     const degree = (angle * 180/Math.PI + 360) % 360
     const percent = ((degree/360) * 100) - 75
-
-    if (isFunction(this.props.onTrackClick)) {
-      this.props.onTrackClick(percent >= 0 ? percent : 100 + percent)
-    }
   }
 
   render () {
@@ -51,10 +46,11 @@ export default class PlayButton extends React.Component {
 
     return (
       <div className="play-button">
-        { this.props.showProgress && range(0, this.props.progress.length).map((i) => {
+        {
+          this.props.showProgress && range(0, this.props.buffered.length).map((i) => {
             const d = this.props.duration
-            const start = this.props.progress.start(i)
-            const end = this.props.progress.end(i)
+            const start = this.props.buffered.start(i)
+            const end = this.props.buffered.end(i)
             const buffer = (end - start) / d
 
             return <div key={i} style={{transform: `rotate(${360*(start/d)} deg)`}}
