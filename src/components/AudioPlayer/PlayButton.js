@@ -14,7 +14,8 @@ export default class PlayButton extends React.Component {
     showProgress: PropTypes.bool,
     percent: PropTypes.number,
     duration: PropTypes.number,
-    buffered: PropTypes.object
+    buffered: PropTypes.object,
+    clickHandler: PropTypes.func
   }
 
   static defaultProps = {
@@ -66,7 +67,7 @@ export default class PlayButton extends React.Component {
             <Circle percent={100} strokeColor="#00000000" strokeWidth={12} trailColor="#00000000" />
           </div>
         }
-        <button className="audio-control">
+        <button className="audio-control" onClick={this.props.clickHandler.bind(this.props.fatherRef)}>
           { icon }
         </button>
       </div>
