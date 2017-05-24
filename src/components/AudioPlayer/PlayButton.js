@@ -15,7 +15,8 @@ export default class PlayButton extends React.Component {
     percent: PropTypes.number,
     duration: PropTypes.number,
     buffered: PropTypes.object,
-    clickHandler: PropTypes.func
+    clickHandler: PropTypes.func,
+    TrackClickHandler: PropTypes.func
   }
 
   static defaultProps = {
@@ -34,6 +35,7 @@ export default class PlayButton extends React.Component {
     const angle = Math.atan2(mouseY - circleCenterY, mouseX - circleCenterX)
     const degree = (angle * 180/Math.PI + 360) % 360
     const percent = ((degree/360) * 100) - 75
+    this.props.TrackClickHandler.bind(this.props.fatherRef, (percent > 0 ? percent : 100 + percent))()
   }
 
   render () {
