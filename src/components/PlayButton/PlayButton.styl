@@ -1,0 +1,44 @@
+.play-button
+  display: flex
+  justify-content: center
+  align-items: center
+  position: relative
+  height: 50px
+  width: 50px
+  cursor: pointer
+
+  button
+    transition: .25s all ease
+    width: 28px
+    height: 28px
+    background-color: #52554C
+    border-radius: 50%
+    border: none
+    cursor: pointer
+    z-index: 10
+    &:focus
+      outline: none
+    &:hover
+      background-color: lighten(#52554C, 30%)
+    &:disabled
+      background-color: lighten(#52554C, 82%)
+
+  .audio-control-progress-container
+    position: absolute
+    top: 50%
+    left: 50%
+
+  .rc-progress-circle
+    width: 40px
+    height: 40px
+    position: absolute
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+
+  .audio-control-play
+    margin-top: 3px
+    margin-left: 1px
+
+.disabled
+  pointer-events: none

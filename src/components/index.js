@@ -8,6 +8,7 @@
 export Back from './Back/Back'
 export Footer from './Footer/Footer'
 export GithubLink from './GithubLink/GithubLink'
+export PlayButton from './PlayButton/PlayButton'
 export RecentSearch from './RecentSearch/RecentSearch'
 export SearchBox from './SearchBox/SearchBox'
 export Suggestions from './Suggestions/Suggestions'

@@ -10,10 +10,12 @@ import 'styles/index.styl'
 
 // import SearchContainer from './containers/SearchContainer'
 
-import { Back } from 'components'
+import { PlayButton } from 'components'
 
 // Render the main component into the dom
 ReactDOM.render(
-  <Back />,
+  <PlayButton showProgress={true}
+              percent={100}
+  />,
   document.getElementById('app')
 )
