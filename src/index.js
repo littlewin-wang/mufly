@@ -8,9 +8,7 @@ import ReactDOM from 'react-dom'
 import 'normalize.css'
 import 'styles/index.styl'
 
-// import SearchContainer from './containers/SearchContainer'
-
-import { Avatar } from 'components'
+import { NodeGraph } from 'components'
 
 // const tracks = [
 //   {
@@ -32,8 +30,6 @@ import { Avatar } from 'components'
 
 // Render the main component into the dom
 ReactDOM.render(
-  <Avatar artistAvatarUrl={'https://i.scdn.co/image/cfe6465e57d23916804e75a113d72ddf09e39a29'}
-          artistVisible={true}
-  />,
+  <NodeGraph />,
   document.getElementById('app')
 )
