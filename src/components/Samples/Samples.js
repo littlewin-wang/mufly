@@ -1,6 +1,8 @@
 import React from 'react'
 import AudioPlayer from '../AudioPlayer/AudioPlayer'
 
+import './Samples.styl'
+
 export default class Samples extends React.Component {
   componentWillMount () {
     this.setState({
@@ -44,9 +46,7 @@ export default class Samples extends React.Component {
       }
 
       return (
-        <span className="audio-player-wrapper" style={styles} key={track.id}>
-          <AudioPlayer url={track.url} />
-        </span>
+        <AudioPlayer url={track.url} style={styles} key={track.id} />
       )
     })
   }

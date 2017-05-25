@@ -1,0 +1,48 @@
+.samples
+  position: relative
+  left: 0
+  right: 0
+  width: 250px
+  height: 250px
+  margin: 0 auto
+  text-align: center
+
+  .audio-player
+    display: inline-block
+    position: relative
+    margin: 0 5px
+
+  .track-name
+    padding: 2rem 1rem
+
+    h6
+      margin: 0
+      font-size: 12px
+      font-weight: bold
+      text-transform: uppercase
+      color: #FFCE28
+
+    h4
+      position: relative
+      margin: 8px 0
+      font-size: 20px
+      font-weight: 300
+      color: #D5DFE1
+
+      &:after
+        content: '';
+        position: absolute
+        width: 30%
+        height: 1px
+        bottom: -14px
+        left: 0
+        right: 0
+        margin: auto
+        opacity: 0.3
+        background: #FFCE28
+        animation: widen 1600ms both 300ms
+
+@keyframes widen {
+  from { transform: scaleX(0.01); }
+  to   { transform: scaleX(1); }
+}
