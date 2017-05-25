@@ -6,6 +6,7 @@
  */
 
 export AudioPlayer from './AudioPlayer/AudioPlayer'
+export Avatar from './Avatar/Avatar'
 export Back from './Back/Back'
 export Footer from './Footer/Footer'
 export GithubLink from './GithubLink/GithubLink'

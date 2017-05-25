@@ -1,0 +1,32 @@
+.avatar-wrapper
+  position: absolute
+  z-index: 1
+  width: 33%
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  margin: 0 auto
+  display: flex
+  flex-direction: column
+  justify-content: center
+
+  .avatar
+    position: relative
+    left: 0
+    right: 0
+    width: 250px
+    height: 250px
+    margin: 0 auto
+    background-position: center center
+    background-size: cover
+
+@media ( max-width: 760px ), ( orientation: portrait )
+  .avatar-wrapper
+    width: 100%
+    display: block
+    height: 25%
+
+    .avatar
+      width: 100%
+      height: 100%
