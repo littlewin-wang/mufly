@@ -14,6 +14,6 @@ import { AudioPlayer } from 'components'
 
 // Render the main component into the dom
 ReactDOM.render(
-  <AudioPlayer url={'https://p.scdn.co/mp3-preview/d3e7d359946a15b2ecb19efaa87147523e067dbc?cid=null'} />,
+  <AudioPlayer url={'http://m10.music.126.net/20170525102947/f835ddb0966e2bb282470873027dc7e3/ymusic/6e01/a4d4/bbef/2dda07904eb54d44abb278165e1c6ead.mp3'} />,
   document.getElementById('app')
 )

@@ -59,7 +59,7 @@ export default class PlayButton extends React.Component {
             return <div key={i} style={{transform: `rotate(${360*(start/d)} deg)`}}
                         className="audio-control-progress-container">
               <Circle percent={buffer*100}
-                      strokeColor="#D9D9D9" strokeWidth={8} trailColor="#FFFFFFFF" />
+                      strokeColor="#666666" strokeWidth={8} trailColor="#FFFFFFFF" />
             </div>
           })
         }

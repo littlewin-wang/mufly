@@ -18,16 +18,12 @@ export default class AudioPlayer extends React.Component {
     return this._audio.currentTime / this._audio.duration * 100
   }
 
-  // progressHandler () {
-  //   console.log(this._audio.buffered)
-  //   this.setState({
-  //     buffered: this._audio.buffered
-  //   })
-  // }
-  canPlayHandler () {
-    this.setState({
-      ready: true
-    })
+  bufferHandler () {
+    if (this.state.ready) {
+      this.setState({
+        buffered: this._audio.buffered
+      })
+    }
   }
 
   playHandler () {
@@ -54,12 +50,6 @@ export default class AudioPlayer extends React.Component {
 
   TrackClickHandler (percent) {
     if (this.state.ready) {
-      if (this.state.mode === 'play' ) {
-        this.setState({
-          mode: 'pause'
-        })
-        this._audio.play()
-      }
       this._audio.currentTime = this._audio.duration * percent / 100
     }
   }
@@ -70,13 +60,22 @@ export default class AudioPlayer extends React.Component {
     })
   }
 
+  componentDidMount () {
+    if (this._audio.error === null) {
+      this.setState({
+        ready: true
+      })
+    }
+  }
+
   render () {
     return (
       <div className="audio-player">
-        <audio onCanPlayThrough={::this.canPlayHandler} onTimeUpdate={::this.playHandler} onEnded={::this.endHandler} src={this.props.url} ref={(i) => this._audio = i}></audio>
+        <audio onProgress={::this.bufferHandler} onLoadedData={::this.bufferHandler} onTimeUpdate={::this.playHandler} onEnded={::this.endHandler} src={this.props.url} ref={(i) => this._audio = i}></audio>
         <PlayButton showProgress={this.state.ready}
                     mode={this.state.mode}
                     percent={this.state.percent}
+                    buffered={this.state.buffered}
                     clickHandler={this.clickHandler}
                     TrackClickHandler={this.TrackClickHandler}
                     fatherRef={this}
