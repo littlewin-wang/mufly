@@ -86,19 +86,69 @@ export default class NodeGraph extends React.Component {
     return { radius, coords }
   }
 
+  updateLinesFromNodes (nodes, lines) {
+    const radius = nodes[0].radius
+
+    return lines.map( line => {
+      const fromNode = nodes.find( node => node.id === line.from)
+      const toNode = nodes.find( node => node.id === line.to)
+
+      return {
+        ...line,
+        x1: fromNode.x + radius,
+        y1: fromNode.y + radius,
+        x2: toNode.x + radius,
+        y2: toNode.y + radius
+      }
+    })
+  }
+
   calculateNodeAndLinePositions (props = this.state) {
-    // const { radius, coords } = this.calculateResponsiveRadiusAndRegions()
+    const { radius, coords } = this.calculateResponsiveRadiusAndRegions()
+
+    const nodes = props.nodes.map( node => {
+      let x = coords[node.region]['x']
+      let y = coords[node.region]['y']
+
+      if (typeof x === 'object') x = x[node.regionIndex]
+      if (typeof y === 'object') y = y[node.regionIndex]
+
+      return {
+        ...node,
+        x: x,
+        y: y,
+        radius: radius
+      }
+    })
+
+    const lines = this.updateLinesFromNodes(nodes, props.lines)
+
+    return { nodes, lines }
   }
 
   render () {
-    const { radius, coords } = this.calculateResponsiveRadiusAndRegions()
+    const { nodes, lines } = this.state
+
     return (
       <svg className="node-graph">
-        <Line x1={157} y1={285} x2={471} y2={285} />
-        <Node region={'PRESENT'} radius={radius} x={coords.PRESENT.x} y={coords.PRESENT.y} artist={{name: 'Littlewin'}} />
-        <Node region={'FUTURE'} radius={radius} x={coords.FUTURE.x[0]} y={coords.FUTURE.y[0]} artist={{name: 'Littlewin'}} />
-        <Node region={'FUTURE'} radius={radius} x={coords.FUTURE.x[1]} y={coords.FUTURE.y[1]} artist={{name: 'Littlewin'}} />
-        <Node region={'FUTURE'} radius={radius} x={coords.FUTURE.x[2]} y={coords.FUTURE.y[2]} artist={{name: 'Littlewin'}} />
+        {lines.map( (line, index) => (
+          <Line key={index}
+                x1={line.x1}
+                y1={line.y1}
+                x2={line.x2}
+                y2={line.y2}
+          />
+        ))}
+
+        {nodes.map( node => (
+          <Node key={node.id}
+                artist={{name: node.id}}
+                region={node.region}
+                radius={node.radius}
+                x={node.x}
+                y={node.y}
+          />
+        ))}
       </svg>
     )
   }

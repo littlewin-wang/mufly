@@ -28,8 +28,24 @@ import { NodeGraph } from 'components'
 //   }
 // ]
 
+const NodeAndLines = {
+  nodes: [
+    {id:'Test1', region: 'PAST', regionIndex: 1},
+    {id:'Test2', region: 'PRESENT', regionIndex: 1},
+    {id:'Test3', region: 'FUTURE', regionIndex: 0},
+    {id:'Test4', region: 'FUTURE', regionIndex: 1},
+    {id:'Test5', region: 'FUTURE', regionIndex: 2}
+  ],
+  lines: [
+    {from: 'Test1', to: 'Test2'},
+    {from: 'Test2', to: 'Test3'},
+    {from: 'Test2', to: 'Test4'},
+    {from: 'Test2', to: 'Test5'}
+  ]
+}
+
 // Render the main component into the dom
 ReactDOM.render(
-  <NodeGraph />,
+  <NodeGraph nodes={NodeAndLines.nodes} lines={NodeAndLines.lines} />,
   document.getElementById('app')
 )
