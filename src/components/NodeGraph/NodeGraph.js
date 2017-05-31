@@ -10,6 +10,17 @@ export default class NodeGraph extends React.Component {
     this.state = this.calculateNodeAndLinePositions(props)
   }
 
+  componentDidMount () {
+    this.resizeHandler = () => {
+      this.setState(this.calculateNodeAndLinePositions())
+    }
+    window.addEventListener('resize', this.resizeHandler)
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('resize', this.resizeHandler)
+  }
+
   calculateResponsiveRadiusAndRegions () {
     const width   = window.innerWidth
     const height  = window.innerHeight
