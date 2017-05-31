@@ -25,7 +25,7 @@ export default class NodeGraph extends React.Component {
     const width   = window.innerWidth
     const height  = window.innerHeight
     const mode    = ( width <= 750 && width < height ) ? 'mobile' : 'desktop'
-    const radius  = mode === 'mobile' ? width * 0.18 : height * 0.1
+    const radius  = mode === 'mobile' ? width * 0.12 : height * 0.1
 
     let coords = { }
 
@@ -55,9 +55,9 @@ export default class NodeGraph extends React.Component {
           ],
           y: [
             // TODO: slight offsets
-            height * 3/4 + height * -1/20 - radius,
-            height * 3/4 + height *  1/20 - radius,
-            height * 3/4 + height * -1/20 - radius
+            height * 4/9 + height * -1/20 - radius,
+            height * 4/9 + height *  1/20 - radius,
+            height * 4/9 + height * -1/20 - radius
           ]
         }
       }
