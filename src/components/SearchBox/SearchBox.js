@@ -28,7 +28,7 @@ export default class SearchBox extends React.Component {
   }
 
   changeHandler (ev) {
-    const { requestSearchSuggestions, clearSearchInput} = this.props
+    const { requestSearchSuggestions, clearSearchInput } = this.props
     const searchItem = ev.target.value
 
     searchItem ? requestSearchSuggestions(searchItem) : clearSearchInput()
