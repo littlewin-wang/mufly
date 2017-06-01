@@ -21,7 +21,8 @@ export default class SearchBox extends React.Component {
     suggestions: PropTypes.array,
     loading: PropTypes.bool,
     requestSearchSuggestions: PropTypes.func,
-    clearSearchInput: PropTypes.func
+    clearSearchInput: PropTypes.func,
+    confirmSelectSuggestion: PropTypes.func
   }
 
   static defaultProps = {
@@ -65,7 +66,9 @@ export default class SearchBox extends React.Component {
       selectedIndex,
       confirmedIndex: selectedIndex
     })
-    console.log('YES')
+    
+    let selectSuggestion = this.props.suggestions[selectedIndex]
+    this.props.confirmSelectSuggestion(selectSuggestion.id)
   }
 
   renderLoading () {

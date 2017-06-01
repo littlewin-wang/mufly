@@ -37,6 +37,10 @@ class SearchContainer extends React.Component {
     }
   }
 
+  confirmSelectSuggestion (id) {
+    this.props.actions.GET_TOP_TRACKS(id)
+  }
+
   render () {
     const recents = [{id: 0, name: 'test0'}, {id: 1, name: 'test1'}, {id: 2, name: 'test2'}, {id: 3, name: 'test3'}]
 
@@ -50,6 +54,7 @@ class SearchContainer extends React.Component {
                    clearSearchInput={::this.clearSearchInput}
                    suggestions={this.formatSuggestions(this.props.suggestions)}
                    loading={this.props.loading}
+                   confirmSelectSuggestion={::this.confirmSelectSuggestion}
         />
         <RecentSearch recents={recents}/>
         <Footer />

@@ -24,4 +24,14 @@ const loading = (state = false, action) => {
   }
 }
 
-export { suggestions, loading }
+const tracks = (state = [], action) => {
+  switch (action.type) {
+    case 'GET_TRACKS':
+      return [action.tracks]
+    
+    default:
+      return state
+  }
+}
+
+export { suggestions, loading, tracks }
