@@ -19,7 +19,7 @@
 
 .footer
   position: fixed
-  z-index: -1
+  z-index: 4
   left: 0
   right: 0
   bottom: 0
@@ -41,6 +41,32 @@
     font-weight: 500
     color: #d9d9d9
     transition: .2s
+
+    &:after
+      content: ''
+      position: absolute
+      left: 0
+      right: 0
+      bottom: -4px
+      height: 3px
+      background: $white
+      border-radius: 6px
+      transform: scaleY(0)
+      transition: 200ms
+
+    &:hover
+      color: $white
+      transform: translateY(-3px)
+      transition: 500ms
+
+      &:after
+        transform: scaleY(1)
+        transition: 500ms
+
+    &.me:after
+      background: $yellow
+    &.spotify:after
+      background: $green
 
 @media ( max-width: 750px ), ( max-height: 600px )
   .footer

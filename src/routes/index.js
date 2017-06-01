@@ -8,7 +8,7 @@ const route = (
   <Router history={browserHistory}>
     <Route path='/'>
       <IndexRoute component={SearchContainer} />
-      <Route path='artist/:id' component={NodeGraphContainer} />
+      <Route path='artist(/:id)' component={NodeGraphContainer} />
     </Route>
   </Router>
 )
