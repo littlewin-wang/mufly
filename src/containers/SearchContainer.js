@@ -6,9 +6,35 @@ import * as actions from '../actions'
 import { SearchBox, RecentSearch, GithubLink, Footer } from 'components'
 
 class SearchContainer extends React.Component {
-  test () {
-    this.props.actions.GET_SEARCH_RESULTS('周', 'artist')
-    console.log(this.props.suggestions)
+  constructor (props) {
+    super(props)
+  }
+
+  requestSearchSuggestions (q) {
+    this.props.actions.GET_SEARCH_RESULTS(q, 'artist')
+  }
+
+  clearSearchInput () {
+    this.props.actions.CLEAR_SEARCH_RESULTS()
+  }
+
+  formatSuggestions (arr) {
+    if (arr[0]) {
+      let retArr = []
+      let len = arr[0].length > 8 ? 8 : arr[0].length
+
+      for (let i = 0; i < len; i++) {
+        let suggestion = {
+          id: arr[0][i].id,
+          name: arr[0][i].name
+        }
+        retArr.push(suggestion)
+      }
+
+      return retArr
+    } else {
+      return []
+    }
   }
 
   render () {
@@ -20,7 +46,11 @@ class SearchContainer extends React.Component {
         <GithubLink />
         <h1>Discover new artists through an infinite suggestion graph.</h1>
         <h3>Enter the name of an artist you like:</h3>
-        <SearchBox requestSearchSuggestions={::this.test}/>
+        <SearchBox requestSearchSuggestions={::this.requestSearchSuggestions}
+                   clearSearchInput={::this.clearSearchInput}
+                   suggestions={this.formatSuggestions(this.props.suggestions)}
+                   loading={this.props.loading}
+        />
         <RecentSearch recents={recents}/>
         <Footer />
       </div>
@@ -30,7 +60,8 @@ class SearchContainer extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    suggestions: state.suggestions
+    suggestions: state.suggestions,
+    loading: state.loading
   }
 }
 

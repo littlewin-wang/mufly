@@ -18,6 +18,7 @@ export default class SearchBox extends React.Component {
   }
 
   static propTypes = {
+    suggestions: PropTypes.array,
     loading: PropTypes.bool,
     requestSearchSuggestions: PropTypes.func,
     clearSearchInput: PropTypes.func
@@ -79,9 +80,6 @@ export default class SearchBox extends React.Component {
     let { loading } = this.props
     let { selectedIndex, confirmedIndex } = this.state
 
-    // const suggestions = [{id: 0, name: 'zero'}, {id: 1, name: 'one'}, {id: 2, name: 'two'}, {id: 3, name: 'three'}]
-    const suggestions = []
-
     return (
       <div className="search-box">
         { loading ? this.renderLoading() : null}
@@ -92,7 +90,7 @@ export default class SearchBox extends React.Component {
           onKeyUp={::this.ctrlHandler}
           ref={(i) => this._input = i}
         />
-        <Suggestions suggestions={suggestions}
+        <Suggestions suggestions={this.props.suggestions}
                      selectedIndex={selectedIndex}
                      confirmedIndex={confirmedIndex}
                      clickHandler={this.selectHandler}
