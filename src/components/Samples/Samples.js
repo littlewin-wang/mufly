@@ -18,7 +18,7 @@ export default class Samples extends React.Component {
   }
 
   renderAudioPlayers () {
-    const { tracks, visible } = this.props
+    const { tracks, visible, playing } = this.props
 
     return tracks.map( (track, index) => {
       let styles = {}
@@ -46,7 +46,7 @@ export default class Samples extends React.Component {
       }
 
       return (
-        <AudioPlayer url={track.url} style={styles} key={track.id} />
+        <AudioPlayer key={track.id} url={track.url} style={styles} id={track.id} isPlay={playing===track.id} playHandler={::this.props.playHandler}/>
       )
     })
   }
@@ -57,8 +57,12 @@ export default class Samples extends React.Component {
 
     return (
       <div className="track-name">
-        <h6>Now Playing</h6>
-        <h4>{ track.name }</h4>
+        { track &&
+          <h6>Now Playing</h6>
+        }
+        { track &&
+          <h4>{ track.name }</h4>
+        }
       </div>
     )
   }

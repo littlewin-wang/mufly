@@ -6,29 +6,17 @@ import * as actions from '../actions'
 import {Avatar, Back, NodeGraph, Samples, GithubLink, Footer } from 'components'
 
 class NodeGraphContainer extends React.Component {
+  componentWillMount () {
+    let id = this.props.routeParams.id
+    this.props.actions.GET_PRESENT_ARTIST(id)
+    this.props.actions.GET_TOP_TRACKS(id)
+  }
+
+  getPlaying (id) {
+    this.props.actions.GET_PLAYING_TRACK(id)
+  }
 
   render () {
-    console.log(this.props.artists)
-    console.log(this.props.tracks)
-
-    const tracks = [
-      {
-        id: '6Rt6KwuF7I8ZkdZG2G0bYr',
-        url: 'https://p.scdn.co/mp3-preview/5394576429c15cd465bccfafb1fffbf971ee53d6?cid=null',
-        name: 'The Only Thing'
-      },
-      {
-        id: '5I6y1KWmUoV5YCaIEcs1qs',
-        url: 'https://p.scdn.co/mp3-preview/f5e665476d6617919aafb00bd6ef3c9912f037a9?cid=null',
-        name: 'Should Have Known Better'
-      },
-      {
-        id: '3tchJ8gDgMdaSxpaLxlr1F',
-        url: 'https://p.scdn.co/mp3-preview/b0065987280a8bd8692ec1ab91e001c3a480f12c?cid=null',
-        name: 'To Be Alone With You'
-      }
-    ]
-
     const NodeAndLines = {
       nodes: [
         {id:'Test1', region: 'PAST', regionIndex: 1},
@@ -49,13 +37,18 @@ class NodeGraphContainer extends React.Component {
       <div className="node-graph-wrapper">
         <Back />
         <GithubLink />
-        <Avatar artistAvatarUrl={'https://i.scdn.co/image/cfe6465e57d23916804e75a113d72ddf09e39a29'}
-                playing={'3tchJ8gDgMdaSxpaLxlr1F'}
-                artistVisible={true}
-        />
-        <Samples tracks={tracks}
-                 playing={'3tchJ8gDgMdaSxpaLxlr1F'}
-        />
+        { this.props.artists.present &&
+          <Avatar artistAvatarUrl={this.props.artists.present.image}
+                  artistVisible={true}
+          />
+        }
+
+        { this.props.tracks.length &&
+          <Samples tracks={this.props.tracks}
+                   playing={this.props.playing}
+                   playHandler={::this.getPlaying}
+          />
+        }
         <NodeGraph nodes={NodeAndLines.nodes} lines={NodeAndLines.lines} />
         <Footer />
       </div>
@@ -66,7 +59,8 @@ class NodeGraphContainer extends React.Component {
 const mapStateToProps = (state) => {
   return {
     artists: state.artists,
-    tracks: state.tracks
+    tracks: state.tracks,
+    playing: state.playing
   }
 }
 

@@ -39,11 +39,13 @@ export default class AudioPlayer extends React.Component {
           mode: 'pause'
         })
         this._audio.play()
+        this.props.playHandler(this.props.id)
       } else {
         this.setState({
           mode: 'play'
         })
         this._audio.pause()
+        this.props.playHandler('')
       }
     }
   }
@@ -65,6 +67,15 @@ export default class AudioPlayer extends React.Component {
       this.setState({
         ready: true
       })
+    }
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if ( !nextProps.isPlay ) {
+      this.setState({
+        mode: 'play'
+      })
+      this._audio.pause()
     }
   }
 

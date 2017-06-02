@@ -44,4 +44,14 @@ const tracks = (state = [], action) => {
   }
 }
 
-export { suggestions, loading, artists, tracks }
+const playing = (state = '', action) => {
+  switch (action.type) {
+    case 'GET_PLAYING':
+      return action.playing
+
+    default:
+      return state
+  }
+}
+
+export { suggestions, loading, artists, tracks, playing }

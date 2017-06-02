@@ -42,6 +42,13 @@ export const GET_TRACKS = (tracks) => {
   }
 }
 
+export const GET_PLAYING = (playing) => {
+  return {
+    type: 'GET_PLAYING',
+    playing
+  }
+}
+
 export const GET_SEARCH_RESULTS = (q, type) => {
   return (dispatch => {
     dispatch(START_LOADING())
@@ -102,5 +109,11 @@ export const GET_TOP_TRACKS = (id) => {
         }
       }
     })
+  })
+}
+
+export const GET_PLAYING_TRACK = (id) => {
+  return (dispatch => {
+    dispatch(GET_PLAYING(id))
   })
 }

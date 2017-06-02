@@ -40,8 +40,6 @@ class SearchContainer extends React.Component {
   }
 
   confirmSelectSuggestion (id) {
-    this.props.actions.GET_PRESENT_ARTIST(id)
-    this.props.actions.GET_TOP_TRACKS(id)
     browserHistory.push(`artist/${id}`)
     this.props.actions.CLEAR_SEARCH_RESULTS()
   }
