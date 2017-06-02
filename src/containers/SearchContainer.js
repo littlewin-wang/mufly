@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as actions from '../actions'
 
+import { browserHistory } from 'react-router'
+
 import { SearchBox, RecentSearch, GithubLink, Footer } from 'components'
 
 class SearchContainer extends React.Component {
@@ -19,14 +21,14 @@ class SearchContainer extends React.Component {
   }
 
   formatSuggestions (arr) {
-    if (arr[0]) {
+    if (arr) {
       let retArr = []
-      let len = arr[0].length > 8 ? 8 : arr[0].length
+      let len = arr.length > 8 ? 8 : arr.length
 
       for (let i = 0; i < len; i++) {
         let suggestion = {
-          id: arr[0][i].id,
-          name: arr[0][i].name
+          id: arr[i].id,
+          name: arr[i].name
         }
         retArr.push(suggestion)
       }
@@ -38,7 +40,10 @@ class SearchContainer extends React.Component {
   }
 
   confirmSelectSuggestion (id) {
+    this.props.actions.GET_PRESENT_ARTIST(id)
     this.props.actions.GET_TOP_TRACKS(id)
+    browserHistory.push(`artist/${id}`)
+    this.props.actions.CLEAR_SEARCH_RESULTS()
   }
 
   render () {

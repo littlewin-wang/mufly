@@ -10,9 +10,9 @@ import 'normalize.css'
 import 'styles/index.styl'
 
 // import API from 'helpers/api'
-// API.topTracks('28ExwzUQsvgJooOI0X1mr3').then(res => {
+// API.releatedArtists('28ExwzUQsvgJooOI0X1mr3').then(res => {
 //   if (res.statusText === 'OK') {
-//     console.log(res.data.tracks)
+//     console.log(res.data)
 //   }
 // })
 

@@ -1,8 +1,8 @@
 const suggestions = (state = [], action) => {
   switch (action.type) {
     case 'GET_SEARCH':
-      return [action.suggestions]
-    
+      return action.suggestions
+
     case 'CLEAR_SEARCH':
       return []
 
@@ -24,14 +24,24 @@ const loading = (state = false, action) => {
   }
 }
 
-const tracks = (state = [], action) => {
+const artists = (state = {}, action) => {
   switch (action.type) {
-    case 'GET_TRACKS':
-      return [action.tracks]
-    
+    case 'GET_PRESENT':
+      return action.artists
+
     default:
       return state
   }
 }
 
-export { suggestions, loading, tracks }
+const tracks = (state = [], action) => {
+  switch (action.type) {
+    case 'GET_TRACKS':
+      return action.tracks
+
+    default:
+      return state
+  }
+}
+
+export { suggestions, loading, artists, tracks }

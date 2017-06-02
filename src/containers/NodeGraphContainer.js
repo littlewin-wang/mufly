@@ -1,8 +1,16 @@
 import React  from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as actions from '../actions'
+
 import {Avatar, Back, NodeGraph, Samples, GithubLink, Footer } from 'components'
 
-export default class NodeGraphContainer extends React.Component {
+class NodeGraphContainer extends React.Component {
+
   render () {
+    console.log(this.props.artists)
+    console.log(this.props.tracks)
+
     const tracks = [
       {
         id: '6Rt6KwuF7I8ZkdZG2G0bYr',
@@ -54,3 +62,21 @@ export default class NodeGraphContainer extends React.Component {
     )
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    artists: state.artists,
+    tracks: state.tracks
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators(actions, dispatch)
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NodeGraphContainer)
