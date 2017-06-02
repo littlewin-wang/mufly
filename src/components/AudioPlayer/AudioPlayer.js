@@ -38,13 +38,17 @@ export default class AudioPlayer extends React.Component {
         this.setState({
           mode: 'pause'
         })
-        this._audio.play()
+        if (this.props.url) {
+          this._audio.play()
+        }
         this.props.playHandler(this.props.id)
       } else {
         this.setState({
           mode: 'play'
         })
-        this._audio.pause()
+        if (this.props.url) {
+          this._audio.pause()
+        }
         this.props.playHandler('')
       }
     }
