@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 import * as actions from '../actions'
 
 import {Avatar, Back, NodeGraph, Samples, GithubLink, Footer } from 'components'
+import Sentry from 'react-activity/lib/Sentry'
 
 class NodeGraphContainer extends React.Component {
   componentWillMount () {
@@ -55,6 +56,8 @@ class NodeGraphContainer extends React.Component {
         { this.props.artists.present &&
           <NodeGraph nodes={this.getNodeAndLines().nodes} lines={this.getNodeAndLines().lines} />
         }
+
+        <Sentry className='node-graph-loading' color="#727981" size={32} speed={0.9}/>
         <Footer />
       </div>
     )
