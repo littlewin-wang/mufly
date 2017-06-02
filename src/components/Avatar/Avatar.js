@@ -37,7 +37,8 @@ export default class Avatar extends React.Component {
 
     return (
       <div className="avatar-wrapper">
-        <div className="avatar" style={styles} />
+        <div className="avatar" style={styles}>
+        </div>
       </div>
     )
   }

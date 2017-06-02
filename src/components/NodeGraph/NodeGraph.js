@@ -1,6 +1,7 @@
 import React from 'react'
 import Line from './Line'
 import Node from './Node'
+import { isEmpty, compact } from 'lodash'
 
 import './NodeGraph.styl'
 
@@ -15,6 +16,10 @@ export default class NodeGraph extends React.Component {
       this.setState(this.calculateNodeAndLinePositions())
     }
     window.addEventListener('resize', this.resizeHandler)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    this.state = this.calculateNodeAndLinePositions(nextProps)
   }
 
   componentWillUnmount () {
@@ -101,15 +106,17 @@ export default class NodeGraph extends React.Component {
     const radius = nodes[0].radius
 
     return lines.map( line => {
-      const fromNode = nodes.find( node => node.id === line.from)
-      const toNode = nodes.find( node => node.id === line.to)
+      if (!isEmpty(line)) {
+        const fromNode = nodes.find( node => node.id === line.from)
+        const toNode = nodes.find( node => node.id === line.to)
 
-      return {
-        ...line,
-        x1: fromNode.x + radius,
-        y1: fromNode.y + radius,
-        x2: toNode.x + radius,
-        y2: toNode.y + radius
+        return {
+          ...line,
+          x1: fromNode.x + radius,
+          y1: fromNode.y + radius,
+          x2: toNode.x + radius,
+          y2: toNode.y + radius
+        }
       }
     })
   }
@@ -117,29 +124,31 @@ export default class NodeGraph extends React.Component {
   calculateNodeAndLinePositions (props = this.state) {
     const { radius, coords } = this.calculateResponsiveRadiusAndRegions()
 
-    const nodes = props.nodes.map( node => {
-      let x = coords[node.region]['x']
-      let y = coords[node.region]['y']
+    const nodes = compact(props.nodes.map( node => {
+      if (!isEmpty(node)) {
+        let x = coords[node.region]['x']
+        let y = coords[node.region]['y']
 
-      if (typeof x === 'object') x = x[node.regionIndex]
-      if (typeof y === 'object') y = y[node.regionIndex]
+        if (typeof x === 'object') x = x[node.regionIndex]
+        if (typeof y === 'object') y = y[node.regionIndex]
 
-      return {
-        ...node,
-        x: x,
-        y: y,
-        radius: radius
+        return {
+          ...node,
+          x: x,
+          y: y,
+          radius: radius
+        }
       }
-    })
+    }))
 
-    const lines = this.updateLinesFromNodes(nodes, props.lines)
+    const lines = compact(this.updateLinesFromNodes(nodes, props.lines))
 
     return { nodes, lines }
   }
 
   render () {
     const { nodes, lines } = this.state
-
+    
     return (
       <svg className="node-graph">
         {lines.map( (line, index) => (

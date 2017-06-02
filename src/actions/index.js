@@ -78,7 +78,8 @@ export const GET_PRESENT_ARTIST = (id) => {
   return (dispatch => {
     API.artists(id).then(res => {
       if (res.statusText === 'OK') {
-        artists.present = {id: id, name: res.data.name, image: res.data.images[0].url}
+        let imgUrl = res.data.images.length ? res.data.images[0].url : 'https://raw.githubusercontent.com/littlewin-wang/mufly/master/image/default-avatar.png'
+        artists.present = {id: id, name: res.data.name, image: imgUrl}
         API.releatedArtists(id).then(res => {
           if (res.statusText === 'OK') {
             if (res.data.artists && res.data.artists.length >= 3) {
@@ -86,8 +87,8 @@ export const GET_PRESENT_ARTIST = (id) => {
                 let artist = {id: res.data.artists[i].id, name: res.data.artists[i].name, image: res.data.artists[i].images[0].url}
                 artists.future.push(artist)
               }
-              dispatch(GET_PRESENT(artists))
             }
+            dispatch(GET_PRESENT(artists))
           }
         })
       }
@@ -99,9 +100,10 @@ export const GET_TOP_TRACKS = (id) => {
   return (dispatch => {
     API.topTracks(id).then(res => {
       if (res.statusText === 'OK') {
-        if (res.data.tracks && res.data.tracks.length >= 3) {
+        if (res.data.tracks && res.data.tracks.length != 0) {
           let tracks = []
-          for (let i = 0; i < 3; i++) {
+          let len = res.data.tracks.length < 3 ? res.data.tracks.length : 3
+          for (let i = 0; i < len; i++) {
             let track = {id: res.data.tracks[i].id, name: res.data.tracks[i].name, url: res.data.tracks[i].preview_url}
             tracks.push(track)
           }

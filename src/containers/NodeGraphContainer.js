@@ -16,23 +16,25 @@ class NodeGraphContainer extends React.Component {
     this.props.actions.GET_PLAYING_TRACK(id)
   }
 
-  render () {
-    const NodeAndLines = {
+  getNodeAndLines () {
+    return {
       nodes: [
-        {id:'Test1', region: 'PAST', regionIndex: 1},
-        {id:'Test2', region: 'PRESENT', regionIndex: 1},
-        {id:'Test3', region: 'FUTURE', regionIndex: 0},
-        {id:'Test4', region: 'FUTURE', regionIndex: 1},
-        {id:'Test5', region: 'FUTURE', regionIndex: 2}
+        {id: 'Test1', region: 'PAST', regionIndex: 1},
+        {id: this.props.artists.present.name, region: 'PRESENT', regionIndex: 1},
+        this.props.artists.future[0] ? {id: this.props.artists.future[0].name, region: 'FUTURE', regionIndex: 0} : {},
+        this.props.artists.future[1] ? {id: this.props.artists.future[1].name, region: 'FUTURE', regionIndex: 1} : {},
+        this.props.artists.future[2] ? {id: this.props.artists.future[2].name, region: 'FUTURE', regionIndex: 2} : {}
       ],
       lines: [
-        {from: 'Test1', to: 'Test2'},
-        {from: 'Test2', to: 'Test3'},
-        {from: 'Test2', to: 'Test4'},
-        {from: 'Test2', to: 'Test5'}
+        {from: 'Test1', to: this.props.artists.present.name},
+        this.props.artists.future[0] ? {from: this.props.artists.present.name, to: this.props.artists.future[0].name} : {},
+        this.props.artists.future[1] ? {from: this.props.artists.present.name, to: this.props.artists.future[1].name} : {},
+        this.props.artists.future[2] ? {from: this.props.artists.present.name, to: this.props.artists.future[2].name} : {}
       ]
     }
+  }
 
+  render () {
     return (
       <div className="node-graph-wrapper">
         <Back />
@@ -43,13 +45,16 @@ class NodeGraphContainer extends React.Component {
           />
         }
 
-        { this.props.tracks.length &&
+        { this.props.tracks.length != 0 &&
           <Samples tracks={this.props.tracks}
                    playing={this.props.playing}
                    playHandler={::this.getPlaying}
           />
         }
-        <NodeGraph nodes={NodeAndLines.nodes} lines={NodeAndLines.lines} />
+
+        { this.props.artists.present &&
+          <NodeGraph nodes={this.getNodeAndLines().nodes} lines={this.getNodeAndLines().lines} />
+        }
         <Footer />
       </div>
     )
