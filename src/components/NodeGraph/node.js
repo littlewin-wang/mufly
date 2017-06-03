@@ -8,7 +8,7 @@ export default class Node extends React.Component {
   }
 
   clickHandler () {
-    // return this.props.actions.updateUrl(this.props.artist.get('id'));
+    this.props.nodeClickHandler(this.props.artist.id)
   }
 
   render () {
@@ -38,7 +38,7 @@ export default class Node extends React.Component {
           height={radius * 2}
           x={x}
           y={y}
-          onClick={this.clickHandler}
+          onClick={::this.clickHandler}
         >
           <g className={classes} style={styles}>
             <circle cx="50%" cy="50%" r="48%" fill="#FFFFFF" />

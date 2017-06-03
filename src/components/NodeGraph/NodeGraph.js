@@ -148,7 +148,7 @@ export default class NodeGraph extends React.Component {
 
   render () {
     const { nodes, lines } = this.state
-    
+
     return (
       <svg className="node-graph">
         {lines.map( (line, index) => (
@@ -162,11 +162,12 @@ export default class NodeGraph extends React.Component {
 
         {nodes.map( node => (
           <Node key={node.id}
-                artist={{name: node.id}}
+                artist={{id: node.id, name: node.name}}
                 region={node.region}
                 radius={node.radius}
                 x={node.x}
                 y={node.y}
+                nodeClickHandler={::this.props.nodeClickHandler}
           />
         ))}
       </svg>

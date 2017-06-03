@@ -3,34 +3,45 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as actions from '../actions'
 
+import { browserHistory } from 'react-router'
+
 import {Avatar, Back, NodeGraph, Samples, GithubLink, Footer } from 'components'
 import Sentry from 'react-activity/lib/Sentry'
 
 class NodeGraphContainer extends React.Component {
   componentWillMount () {
     let id = this.props.routeParams.id
-    this.props.actions.GET_PRESENT_ARTIST(id)
-    this.props.actions.GET_TOP_TRACKS(id)
+    this.getArtistsAndTracks(id)
   }
 
   getPlaying (id) {
     this.props.actions.GET_PLAYING_TRACK(id)
   }
 
+  getArtistsAndTracks (id) {
+    this.props.actions.GET_PRESENT_ARTIST(id)
+    this.props.actions.GET_TOP_TRACKS(id)
+  }
+
+  nodeClickHandler (id) {
+    browserHistory.push(`/artist/${id}`)
+    this.getArtistsAndTracks(id)
+  }
+
   getNodeAndLines () {
     return {
       nodes: [
-        {id: 'Test1', region: 'PAST', regionIndex: 1},
-        {id: this.props.artists.present.name, region: 'PRESENT', regionIndex: 1},
-        this.props.artists.future[0] ? {id: this.props.artists.future[0].name, region: 'FUTURE', regionIndex: 0} : {},
-        this.props.artists.future[1] ? {id: this.props.artists.future[1].name, region: 'FUTURE', regionIndex: 1} : {},
-        this.props.artists.future[2] ? {id: this.props.artists.future[2].name, region: 'FUTURE', regionIndex: 2} : {}
+        {id: 'Test_id', name: 'Test1', region: 'PAST', regionIndex: 1},
+        {id: this.props.artists.present.id, name: this.props.artists.present.name, region: 'PRESENT', regionIndex: 1},
+        this.props.artists.future[0] ? {id: this.props.artists.future[0].id, name: this.props.artists.future[0].name, region: 'FUTURE', regionIndex: 0} : {},
+        this.props.artists.future[1] ? {id: this.props.artists.future[1].id, name: this.props.artists.future[1].name, region: 'FUTURE', regionIndex: 1} : {},
+        this.props.artists.future[2] ? {id: this.props.artists.future[2].id, name: this.props.artists.future[2].name, region: 'FUTURE', regionIndex: 2} : {}
       ],
       lines: [
-        {from: 'Test1', to: this.props.artists.present.name},
-        this.props.artists.future[0] ? {from: this.props.artists.present.name, to: this.props.artists.future[0].name} : {},
-        this.props.artists.future[1] ? {from: this.props.artists.present.name, to: this.props.artists.future[1].name} : {},
-        this.props.artists.future[2] ? {from: this.props.artists.present.name, to: this.props.artists.future[2].name} : {}
+        {from: 'Test_id', to: this.props.artists.present.id},
+        this.props.artists.future[0] ? {from: this.props.artists.present.id, to: this.props.artists.future[0].id} : {},
+        this.props.artists.future[1] ? {from: this.props.artists.present.id, to: this.props.artists.future[1].id} : {},
+        this.props.artists.future[2] ? {from: this.props.artists.present.id, to: this.props.artists.future[2].id} : {}
       ]
     }
   }
@@ -54,7 +65,7 @@ class NodeGraphContainer extends React.Component {
         }
 
         { this.props.artists.present && !this.props.loading &&
-          <NodeGraph nodes={this.getNodeAndLines().nodes} lines={this.getNodeAndLines().lines} />
+          <NodeGraph nodes={this.getNodeAndLines().nodes} lines={this.getNodeAndLines().lines} nodeClickHandler={::this.nodeClickHandler}/>
         }
 
         { this.props.loading &&
