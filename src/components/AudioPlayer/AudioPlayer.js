@@ -62,7 +62,8 @@ export default class AudioPlayer extends React.Component {
 
   endHandler () {
     this.setState({
-      mode: 'play'
+      mode: 'play',
+      percent: 0
     })
   }
 
