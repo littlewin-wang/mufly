@@ -76,6 +76,7 @@ export const GET_PRESENT_ARTIST = (id) => {
   }
 
   return (dispatch => {
+    dispatch(START_LOADING())
     API.artists(id).then(res => {
       if (res.statusText === 'OK') {
         let imgUrl = res.data.images.length ? res.data.images[0].url : 'https://raw.githubusercontent.com/littlewin-wang/mufly/master/image/default-avatar.png'
@@ -88,6 +89,7 @@ export const GET_PRESENT_ARTIST = (id) => {
                 artists.future.push(artist)
               }
             }
+            dispatch(END_LOADING())
             dispatch(GET_PRESENT(artists))
           }
         })

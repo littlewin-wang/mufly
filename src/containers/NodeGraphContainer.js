@@ -40,24 +40,27 @@ class NodeGraphContainer extends React.Component {
       <div className="node-graph-wrapper">
         <Back />
         <GithubLink />
-        { this.props.artists.present &&
+        { this.props.artists.present && !this.props.loading &&
           <Avatar artistAvatarUrl={this.props.artists.present.image}
                   artistVisible={true}
           />
         }
 
-        { this.props.tracks.length != 0 &&
+        { this.props.tracks.length != 0 && !this.props.loading &&
           <Samples tracks={this.props.tracks}
                    playing={this.props.playing}
                    playHandler={::this.getPlaying}
           />
         }
 
-        { this.props.artists.present &&
+        { this.props.artists.present && !this.props.loading &&
           <NodeGraph nodes={this.getNodeAndLines().nodes} lines={this.getNodeAndLines().lines} />
         }
 
-        <Sentry className='node-graph-loading' color="#727981" size={32} speed={0.9}/>
+        { this.props.loading &&
+          <Sentry className='node-graph-loading' color="#727981" size={32} speed={0.9}/>
+        }
+
         <Footer />
       </div>
     )
@@ -68,6 +71,7 @@ const mapStateToProps = (state) => {
   return {
     artists: state.artists,
     tracks: state.tracks,
+    loading: state.loading,
     playing: state.playing
   }
 }
