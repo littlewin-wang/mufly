@@ -54,12 +54,11 @@ export default class Samples extends React.Component {
   renderTrackNames () {
     const { tracks, playing } = this.props
     const track = tracks.find( t => t.id === playing )
+    const isShow = track ? 1 : 0
 
     return (
-      <div className="track-name">
-        { track &&
-          <h6>Now Playing</h6>
-        }
+      <div style={{opacity: isShow}} className="track-name">
+        <h6>Now Playing</h6>
         { track &&
           <h4>{ track.name }</h4>
         }

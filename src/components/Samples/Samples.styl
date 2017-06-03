@@ -23,9 +23,11 @@
       display: inline-block
       position: relative
       margin: 0 5px
+      opacity: 0
 
     .track-name
       padding: 2rem 1rem
+      transition: opacity 500ms linear
 
       h6
         margin: 0
@@ -54,7 +56,26 @@
           background: #FFCE28
           animation: widen 1600ms both 300ms
 
-@keyframes widen {
-  from { transform: scaleX(0.01); }
-  to   { transform: scaleX(1); }
-}
+@keyframes widen
+  from
+    transform: scaleX(0.01)
+  to
+    transform: scaleX(1)
+
+@keyframes button-enter
+  from
+    transform: scale(0.5, 0.5)
+    transform-origin: 50% 50%
+    opacity: 0.01
+  to
+    transform: scale(1, 1)
+    transform-origin: 50% 50%
+    opacity: 1
+
+@keyframes button-exit
+  from
+    transform: translateY(0)
+    opacity: 1
+  to
+    transform: translateY(150px)
+    opacity: 0

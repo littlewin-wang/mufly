@@ -61,6 +61,7 @@ class NodeGraphContainer extends React.Component {
           <Samples tracks={this.props.tracks}
                    playing={this.props.playing}
                    playHandler={::this.getPlaying}
+                   visible={true}
           />
         }
 

@@ -65,6 +65,7 @@ export default class AudioPlayer extends React.Component {
       mode: 'play',
       percent: 0
     })
+    this.props.playHandler('')
   }
 
   componentDidMount () {
@@ -86,7 +87,7 @@ export default class AudioPlayer extends React.Component {
 
   render () {
     return (
-      <div className="audio-player">
+      <div className="audio-player" style={this.props.style}>
         <audio onProgress={::this.bufferHandler} onLoadedData={::this.bufferHandler} onTimeUpdate={::this.playHandler} onEnded={::this.endHandler} src={this.props.url} ref={(i) => this._audio = i}></audio>
         <PlayButton showProgress={this.state.ready}
                     mode={this.state.mode}
