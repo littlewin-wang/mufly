@@ -56,7 +56,9 @@ export default class SearchBox extends React.Component {
         }
         break
       case KEYS.ENTER:
-        this.selectHandler(selected)
+        if (selected !== null) {
+          this.selectHandler(selected)
+        }
         break
     }
   }
@@ -66,7 +68,7 @@ export default class SearchBox extends React.Component {
       selectedIndex,
       confirmedIndex: selectedIndex
     })
-    
+
     let selectSuggestion = this.props.suggestions[selectedIndex]
     this.props.confirmSelectSuggestion(selectSuggestion.id)
   }

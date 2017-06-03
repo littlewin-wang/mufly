@@ -14,6 +14,12 @@ class NodeGraphContainer extends React.Component {
     this.getArtistsAndTracks(id)
   }
 
+  componentWillReceiveProps (nextProps) {
+    if (this.props.routeParams.id !== nextProps.routeParams.id) {
+      this.getArtistsAndTracks(nextProps.routeParams.id)
+    }
+  }
+
   getPlaying (id) {
     this.props.actions.GET_PLAYING_TRACK(id)
   }

@@ -85,7 +85,8 @@ export const GET_PRESENT_ARTIST = (id) => {
           if (res.statusText === 'OK') {
             if (res.data.artists && res.data.artists.length >= 3) {
               for (let i = 0; i < 3; i++) {
-                let artist = {id: res.data.artists[i].id, name: res.data.artists[i].name, image: res.data.artists[i].images[0].url}
+                imgUrl = res.data.artists[i].images.length ? res.data.artists[i].images[0].url : 'https://raw.githubusercontent.com/littlewin-wang/mufly/master/image/default-avatar.png'
+                let artist = {id: res.data.artists[i].id, name: res.data.artists[i].name, image: imgUrl}
                 artists.future.push(artist)
               }
             }
@@ -110,6 +111,8 @@ export const GET_TOP_TRACKS = (id) => {
             tracks.push(track)
           }
           dispatch(GET_TRACKS(tracks))
+        } else {
+          dispatch(GET_TRACKS([]))
         }
       }
     })
