@@ -36,6 +36,15 @@ class NodeGraphContainer extends React.Component {
   }
 
   nodeClickHandler (id) {
+    // If click past node
+    let pastId = this.props.artists.past[this.props.artists.past.length - 1] ? this.props.artists.past[this.props.artists.past.length - 1].id : undefined
+    if (pastId === id) {
+      this.props.actions.RM_PAST_ARTIST()
+      browserHistory.push(`/artist/${id}`)
+      return
+    }
+
+    // If click future node
     let artist = this.props.artists.present
     if (! this.props.artists.past.some((past) => {
         return past.id === artist.id

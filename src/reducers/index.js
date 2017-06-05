@@ -36,6 +36,10 @@ const artists = (state = {past: []}, action) => {
       state.past.push(action.past)
       return state
 
+    case 'RM_PAST':
+      state.past.pop()
+      return state
+
     default:
       return state
   }

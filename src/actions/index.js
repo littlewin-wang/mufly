@@ -42,6 +42,13 @@ export const ADD_PAST = (past) => {
   }
 }
 
+export const RM_PAST = (past) => {
+  return {
+    type: 'RM_PAST',
+    past
+  }
+}
+
 export const GET_TRACKS = (tracks) => {
   return {
     type: 'GET_TRACKS',
@@ -113,6 +120,12 @@ export const GET_PRESENT_ARTIST = (id, ignoreId) => {
 export const ADD_PAST_ARTIST = (artist) => {
   return dispatch => {
     dispatch(ADD_PAST(artist))
+  }
+}
+
+export const RM_PAST_ARTIST = (artist) => {
+  return dispatch => {
+    dispatch(RM_PAST(artist))
   }
 }
 
