@@ -18,6 +18,8 @@ class NodeGraphContainer extends React.Component {
     if (this.props.routeParams.id !== nextProps.routeParams.id) {
       this.getArtistsAndTracks(nextProps.routeParams.id)
     }
+
+    // 1 - remove future nodes
   }
 
   componentWillUnmount () {
@@ -78,6 +80,8 @@ class NodeGraphContainer extends React.Component {
   }
 
   render () {
+    console.log('past:', this.props.artists.past[this.props.artists.past.length-1] ? this.props.artists.past[this.props.artists.past.length-1].name : undefined, 'present:', this.props.artists.present ? this.props.artists.present.name : undefined, 'future1:', this.props.artists.future ? this.props.artists.future[0].name : undefined, 'future2:', this.props.artists.future ? this.props.artists.future[1].name : undefined, 'future3:', this.props.artists.future ? this.props.artists.future[2].name : undefined)
+
     return (
       <div className="node-graph-wrapper">
         <Back />
