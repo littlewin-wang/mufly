@@ -160,8 +160,8 @@ export default class NodeGraph extends React.Component {
           />
         ))}
 
-        {nodes.map( node => (
-          <Node key={node.id}
+        {nodes.map( (node, index) => (
+          <Node key={index}
                 artist={{id: node.id, name: node.name}}
                 region={node.region}
                 radius={node.radius}

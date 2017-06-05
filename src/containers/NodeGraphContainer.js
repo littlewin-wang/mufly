@@ -24,27 +24,39 @@ class NodeGraphContainer extends React.Component {
     this.props.actions.GET_PLAYING_TRACK(id)
   }
 
-  getArtistsAndTracks (id) {
-    this.props.actions.GET_PRESENT_ARTIST(id)
+  getArtistsAndTracks (id, ignoreId) {
+    console.log('getArtistsAndTracks' + new Date())
+
+    let pastId = this.props.artists.past[this.props.artists.past.length - 1] ? this.props.artists.past[this.props.artists.past.length - 1].id : undefined
+
+    let calcId = ignoreId ? ignoreId : pastId
+
+    this.props.actions.GET_PRESENT_ARTIST(id, calcId)
     this.props.actions.GET_TOP_TRACKS(id)
   }
 
   nodeClickHandler (id) {
+    let artist = this.props.artists.present
+    if (! this.props.artists.past.some((past) => {
+        return past.id === artist.id
+      })) {
+      this.props.actions.ADD_PAST_ARTIST(artist)
+    }
+
     browserHistory.push(`/artist/${id}`)
-    this.getArtistsAndTracks(id)
   }
 
   getNodeAndLines () {
     return {
       nodes: [
-        {id: 'Test_id', name: 'Test1', region: 'PAST', regionIndex: 1},
+        this.props.artists.past[this.props.artists.past.length - 1] ? {id: this.props.artists.past[this.props.artists.past.length - 1].id, name: this.props.artists.past[this.props.artists.past.length - 1].name, region: 'PAST', regionIndex: 1} : {},
         {id: this.props.artists.present.id, name: this.props.artists.present.name, region: 'PRESENT', regionIndex: 1},
         this.props.artists.future[0] ? {id: this.props.artists.future[0].id, name: this.props.artists.future[0].name, region: 'FUTURE', regionIndex: 0} : {},
         this.props.artists.future[1] ? {id: this.props.artists.future[1].id, name: this.props.artists.future[1].name, region: 'FUTURE', regionIndex: 1} : {},
         this.props.artists.future[2] ? {id: this.props.artists.future[2].id, name: this.props.artists.future[2].name, region: 'FUTURE', regionIndex: 2} : {}
       ],
       lines: [
-        {from: 'Test_id', to: this.props.artists.present.id},
+        this.props.artists.past[this.props.artists.past.length - 1] ? {from: this.props.artists.past[this.props.artists.past.length - 1].id, to: this.props.artists.present.id} : {},
         this.props.artists.future[0] ? {from: this.props.artists.present.id, to: this.props.artists.future[0].id} : {},
         this.props.artists.future[1] ? {from: this.props.artists.present.id, to: this.props.artists.future[1].id} : {},
         this.props.artists.future[2] ? {from: this.props.artists.present.id, to: this.props.artists.future[2].id} : {}

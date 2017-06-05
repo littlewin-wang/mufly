@@ -24,10 +24,17 @@ const loading = (state = false, action) => {
   }
 }
 
-const artists = (state = {}, action) => {
+const artists = (state = {past: []}, action) => {
   switch (action.type) {
     case 'GET_PRESENT':
-      return action.artists
+      return {
+        past: state.past,
+        ...action.artists
+      }
+
+    case 'ADD_PAST':
+      state.past.push(action.past)
+      return state
 
     default:
       return state

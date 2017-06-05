@@ -35,6 +35,13 @@ export const GET_PRESENT = (artists) => {
   }
 }
 
+export const ADD_PAST = (past) => {
+  return {
+    type: 'ADD_PAST',
+    past
+  }
+}
+
 export const GET_TRACKS = (tracks) => {
   return {
     type: 'GET_TRACKS',
@@ -68,9 +75,8 @@ export const CLEAR_SEARCH_RESULTS = () => {
   })
 }
 
-export const GET_PRESENT_ARTIST = (id) => {
+export const GET_PRESENT_ARTIST = (id, ignoreId) => {
   let artists = {
-    past: [],
     present: {},
     future: []
   }
@@ -83,11 +89,16 @@ export const GET_PRESENT_ARTIST = (id) => {
         artists.present = {id: id, name: res.data.name, image: imgUrl}
         API.releatedArtists(id).then(res => {
           if (res.statusText === 'OK') {
-            if (res.data.artists && res.data.artists.length >= 3) {
-              for (let i = 0; i < 3; i++) {
+            if (res.data.artists && res.data.artists.length) {
+              for (let i = 0; i < res.data.artists.length; i++) {
                 imgUrl = res.data.artists[i].images.length ? res.data.artists[i].images[0].url : 'https://raw.githubusercontent.com/littlewin-wang/mufly/master/image/default-avatar.png'
                 let artist = {id: res.data.artists[i].id, name: res.data.artists[i].name, image: imgUrl}
-                artists.future.push(artist)
+                if (artist.id !== ignoreId) {
+                  artists.future.push(artist)
+                }
+                if (artists.future.length === 3) {
+                  break
+                }
               }
             }
             dispatch(END_LOADING())
@@ -97,6 +108,12 @@ export const GET_PRESENT_ARTIST = (id) => {
       }
     })
   })
+}
+
+export const ADD_PAST_ARTIST = (artist) => {
+  return dispatch => {
+    dispatch(ADD_PAST(artist))
+  }
 }
 
 export const GET_TOP_TRACKS = (id) => {
