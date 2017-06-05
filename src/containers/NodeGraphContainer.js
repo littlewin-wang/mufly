@@ -9,6 +9,11 @@ import {Avatar, Back, NodeGraph, Samples, GithubLink, Footer } from 'components'
 import Sentry from 'react-activity/lib/Sentry'
 
 class NodeGraphContainer extends React.Component {
+  constructor (props) {
+    super(props)
+    // this.animateReorder = this.animateReorder.bind(this)
+  }
+
   componentWillMount () {
     let id = this.props.routeParams.id
     this.getArtistsAndTracks(id)
@@ -19,11 +24,47 @@ class NodeGraphContainer extends React.Component {
       this.getArtistsAndTracks(nextProps.routeParams.id)
     }
 
-    // 1 - remove future nodes
+    if (!nextProps.loading && this.props.artists !== nextProps.artists) {
+      this.rmFutureNodes(nextProps)
+        // .then(this.adjustPresentNode)
+        // .then(this.addFutureNode)
+    }
+    // 2 - Move present to past or future
+    //   - Move new present node to middle, if needed
+
+    // 3 - Add new future nodes
+  }
+
+  // 1 - Remove future nodes
+  rmFutureNodes (nextProps) {
+    if (this.state && this.state.future.length) {
+      this.state.future.map((artist) => {
+        return artist.id === nextProps.artists.present.id ? artist : {}
+      })
+    }
+    console.log(this.state, nextProps.artists)
   }
 
   componentWillUnmount () {
     this.props.actions.CLEAR_PAST_ARTISTS()
+  }
+
+  getNodeAndLines (props) {
+    return {
+      nodes: [
+        props.artists.past[props.artists.past.length - 1] ? {id: props.artists.past[props.artists.past.length - 1].id, name: props.artists.past[props.artists.past.length - 1].name, region: 'PAST', regionIndex: 1} : {},
+        {id: props.artists.present.id, name: props.artists.present.name, region: 'PRESENT', regionIndex: 1},
+        props.artists.future[0] ? {id: props.artists.future[0].id, name: props.artists.future[0].name, region: 'FUTURE', regionIndex: 0} : {},
+        props.artists.future[1] ? {id: props.artists.future[1].id, name: props.artists.future[1].name, region: 'FUTURE', regionIndex: 1} : {},
+        props.artists.future[2] ? {id: props.artists.future[2].id, name: props.artists.future[2].name, region: 'FUTURE', regionIndex: 2} : {}
+      ],
+      lines: [
+        props.artists.past[props.artists.past.length - 1] ? {from: props.artists.past[props.artists.past.length - 1].id, to: props.artists.present.id} : {},
+        props.artists.future[0] ? {from: props.artists.present.id, to: props.artists.future[0].id} : {},
+        props.artists.future[1] ? {from: props.artists.present.id, to: props.artists.future[1].id} : {},
+        props.artists.future[2] ? {from: props.artists.present.id, to: props.artists.future[2].id} : {}
+      ]
+    }
   }
 
   getPlaying (id) {
@@ -61,26 +102,7 @@ class NodeGraphContainer extends React.Component {
     browserHistory.push(`/artist/${id}`)
   }
 
-  getNodeAndLines () {
-    return {
-      nodes: [
-        this.props.artists.past[this.props.artists.past.length - 1] ? {id: this.props.artists.past[this.props.artists.past.length - 1].id, name: this.props.artists.past[this.props.artists.past.length - 1].name, region: 'PAST', regionIndex: 1} : {},
-        {id: this.props.artists.present.id, name: this.props.artists.present.name, region: 'PRESENT', regionIndex: 1},
-        this.props.artists.future[0] ? {id: this.props.artists.future[0].id, name: this.props.artists.future[0].name, region: 'FUTURE', regionIndex: 0} : {},
-        this.props.artists.future[1] ? {id: this.props.artists.future[1].id, name: this.props.artists.future[1].name, region: 'FUTURE', regionIndex: 1} : {},
-        this.props.artists.future[2] ? {id: this.props.artists.future[2].id, name: this.props.artists.future[2].name, region: 'FUTURE', regionIndex: 2} : {}
-      ],
-      lines: [
-        this.props.artists.past[this.props.artists.past.length - 1] ? {from: this.props.artists.past[this.props.artists.past.length - 1].id, to: this.props.artists.present.id} : {},
-        this.props.artists.future[0] ? {from: this.props.artists.present.id, to: this.props.artists.future[0].id} : {},
-        this.props.artists.future[1] ? {from: this.props.artists.present.id, to: this.props.artists.future[1].id} : {},
-        this.props.artists.future[2] ? {from: this.props.artists.present.id, to: this.props.artists.future[2].id} : {}
-      ]
-    }
-  }
-
   render () {
-    console.log('past:', this.props.artists.past[this.props.artists.past.length-1] ? this.props.artists.past[this.props.artists.past.length-1].name : undefined, 'present:', this.props.artists.present ? this.props.artists.present.name : undefined, 'future1:', this.props.artists.future ? this.props.artists.future[0].name : undefined, 'future2:', this.props.artists.future ? this.props.artists.future[1].name : undefined, 'future3:', this.props.artists.future ? this.props.artists.future[2].name : undefined)
 
     return (
       <div className="node-graph-wrapper">
@@ -88,20 +110,20 @@ class NodeGraphContainer extends React.Component {
         <GithubLink />
         { this.props.artists.present && !this.props.loading &&
           <Avatar artistAvatarUrl={this.props.artists.present.image}
-                  artistVisible={true}
-          />
+                artistVisible={true}
+        />
         }
 
         { this.props.tracks.length != 0 && !this.props.loading &&
           <Samples tracks={this.props.tracks}
-                   playing={this.props.playing}
-                   playHandler={::this.getPlaying}
-                   visible={true}
-          />
+                 playing={this.props.playing}
+                 playHandler={::this.getPlaying}
+                 visible={true}
+        />
         }
 
         { this.props.artists.present && !this.props.loading &&
-          <NodeGraph nodes={this.getNodeAndLines().nodes} lines={this.getNodeAndLines().lines} nodeClickHandler={::this.nodeClickHandler}/>
+          <NodeGraph nodes={this.getNodeAndLines(this.props).nodes} lines={this.getNodeAndLines(this.props).lines} nodeClickHandler={::this.nodeClickHandler}/>
         }
 
         { this.props.loading &&
