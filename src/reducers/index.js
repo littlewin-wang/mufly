@@ -40,6 +40,10 @@ const artists = (state = {past: []}, action) => {
       state.past.pop()
       return state
 
+    case 'CLEAR_PAST':
+      state.past = []
+      return state
+
     default:
       return state
   }

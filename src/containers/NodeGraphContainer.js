@@ -20,6 +20,10 @@ class NodeGraphContainer extends React.Component {
     }
   }
 
+  componentWillUnmount () {
+    this.props.actions.CLEAR_PAST_ARTISTS()
+  }
+
   getPlaying (id) {
     this.props.actions.GET_PLAYING_TRACK(id)
   }
