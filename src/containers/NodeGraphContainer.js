@@ -156,23 +156,23 @@ class NodeGraphContainer extends React.Component {
 
     // If click future node
     let artist = this.props.artists.present
-    if (! this.props.artists.past.some((past) => {
-        return past.id === artist.id
-      })) {
-      this.props.actions.ADD_PAST_ARTIST(artist)
-    }
+    // if (! this.props.artists.past.some((past) => {
+    //     return past.id === artist.id
+    //   })) {
+    //   this.props.actions.ADD_PAST_ARTIST(artist)
+    // }
+
+    this.props.actions.ADD_PAST_ARTIST(artist)
 
     browserHistory.push(`/artist/${id}`)
   }
 
   render () {
-    console.log(this.state)
-
     return (
       <div className="node-graph-wrapper">
         <Back />
         <GithubLink />
-        { !isEmpty(this.state.present) && !this.props.loading &&
+        { !isEmpty(this.state.present) &&
           <Avatar artistAvatarUrl={this.props.artists.present.image}
                 artistVisible={true}
         />
@@ -186,7 +186,7 @@ class NodeGraphContainer extends React.Component {
         />
         }
 
-        { !isEmpty(this.state.present) && !this.props.loading &&
+        { !isEmpty(this.state.present) &&
           <NodeGraph nodes={this.getNodeAndLines(this.state).nodes} lines={this.getNodeAndLines(this.state).lines} nodeClickHandler={::this.nodeClickHandler}/>
         }
 

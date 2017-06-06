@@ -1,7 +1,7 @@
 const axios = require('axios')
 
 const API_ROOT = 'https://api.spotify.com/v1/'
-const AUTH_TOKEN = 'Bearer BQCbY3QT1hUNxplFFrxmGq-LXRqluqZKM1PJwTNtFvGBb7kxiDQFhBdrJDOpsRotqwOoO3dBLmGhuz9r1WjHrw'
+const AUTH_TOKEN = 'Bearer BQDpAvQa9of9fAmDOaag-aziv0sRm5F9Ok22WowbXTmRR6Zy0hrkO1MNNCjbnMuMULeqpBZXETVWSJrppGNQeQ'
 
 axios.default.withCredentials = true
 axios.defaults.headers.common['Authorization'] = AUTH_TOKEN
