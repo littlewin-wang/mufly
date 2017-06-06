@@ -9,15 +9,12 @@ import routes from './routes'
 import 'normalize.css'
 import 'styles/index.styl'
 
-// import API from 'helpers/api'
-// API.releatedArtists('123')
+// import AUTH from 'helpers/auth'
+// AUTH.getAuth()
 //   .then(res => {
 //     if (res.statusText === 'OK') {
 //       console.log(res.data)
 //     }
-//   })
-//   .catch((error) => {
-//     console.log(error)
 //   })
 
 // Render the main component into the dom
