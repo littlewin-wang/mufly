@@ -35,11 +35,11 @@ class NodeGraphContainer extends React.Component {
 
       setTimeout(() => {
         this.adjustPresentNode(nextProps)
-      }, 1000)
+      }, 500)
 
       setTimeout(() => {
         this.addFutureNodes(nextProps)
-      }, 2000)
+      }, 1000)
     }
   }
 

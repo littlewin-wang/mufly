@@ -157,6 +157,7 @@ export default class NodeGraph extends React.Component {
                 y1={line.y1}
                 x2={line.x2}
                 y2={line.y2}
+                expanding={true}
           />
         ))}
 
@@ -165,6 +166,7 @@ export default class NodeGraph extends React.Component {
                 artist={{id: node.id, name: node.name}}
                 region={node.region}
                 radius={node.radius}
+                rejected={false}
                 x={node.x}
                 y={node.y}
                 nodeClickHandler={::this.props.nodeClickHandler}
