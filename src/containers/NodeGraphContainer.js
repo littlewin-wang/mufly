@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 import * as actions from '../actions'
 
 import { browserHistory } from 'react-router'
+import { isEmpty } from 'lodash'
 
 import {Avatar, Back, NodeGraph, Samples, GithubLink, Footer } from 'components'
 import Sentry from 'react-activity/lib/Sentry'
@@ -11,6 +12,11 @@ import Sentry from 'react-activity/lib/Sentry'
 class NodeGraphContainer extends React.Component {
   constructor (props) {
     super(props)
+    this.state = {
+      past: [],
+      present: {},
+      future: []
+    }
     // this.animateReorder = this.animateReorder.bind(this)
   }
 
@@ -26,23 +32,80 @@ class NodeGraphContainer extends React.Component {
 
     if (!nextProps.loading && this.props.artists !== nextProps.artists) {
       this.rmFutureNodes(nextProps)
-        // .then(this.adjustPresentNode)
-        // .then(this.addFutureNode)
-    }
-    // 2 - Move present to past or future
-    //   - Move new present node to middle, if needed
 
-    // 3 - Add new future nodes
+      setTimeout(() => {
+        this.adjustPresentNode(nextProps)
+      }, 1000)
+
+      setTimeout(() => {
+        this.addFutureNodes(nextProps)
+      }, 2000)
+    }
   }
 
-  // 1 - Remove future nodes
+  // 1 - Remove future nodes, past node if needed. (Do not need when first mount)
   rmFutureNodes (nextProps) {
-    if (this.state && this.state.future.length) {
-      this.state.future.map((artist) => {
-        return artist.id === nextProps.artists.present.id ? artist : {}
+    if (this.state && !isEmpty(this.state.future)) {
+      this.setState({
+        future: this.state.future.map((artist) => {
+          return artist.id === nextProps.artists.present.id ? artist : {}
+        })
       })
     }
-    console.log(this.state, nextProps.artists)
+  }
+
+  // 2 - Move present to past or future
+  //   - Move new present node to middle, if needed
+  adjustPresentNode (nextProps) {
+    if (this.state && !isEmpty(this.state.present)) {
+      // - present need go to past, future node comes to present
+      if (!isEmpty(nextProps.artists.past) && this.state.present.id === nextProps.artists.past[nextProps.artists.past.length - 1].id) {
+        let past = this.state.past
+        past.push(this.state.present)
+
+        this.setState({
+          past: past,
+          future: []
+        })
+      }
+
+      // - present need go to future, past node comes to present
+      else if (nextProps.artists.future.some((artist) => {
+          return artist.id === this.state.present.id
+        })) {
+
+        let past = this.state.past
+        past.pop()
+
+        this.setState({
+          past: past,
+          future: nextProps.artists.future.map((artist) => {
+            return artist.id === this.state.present.id ? artist : {}
+          })
+        })
+      }
+    }
+
+    this.setState({
+      present: nextProps.artists.present
+    })
+  }
+
+  // 3 - Add new future nodes
+  addFutureNodes (nextProps) {
+    let future
+
+    if (this.state && this.state.future.length) {
+      future = this.state.future.map((artist, index) => {
+        return artist.id === nextProps.artists.future[index].id ? artist : nextProps.artists.future[index]
+      })
+    } else {
+      future = nextProps.artists.future
+    }
+
+    this.setState({
+      future: future
+    })
   }
 
   componentWillUnmount () {
@@ -52,17 +115,17 @@ class NodeGraphContainer extends React.Component {
   getNodeAndLines (props) {
     return {
       nodes: [
-        props.artists.past[props.artists.past.length - 1] ? {id: props.artists.past[props.artists.past.length - 1].id, name: props.artists.past[props.artists.past.length - 1].name, region: 'PAST', regionIndex: 1} : {},
-        {id: props.artists.present.id, name: props.artists.present.name, region: 'PRESENT', regionIndex: 1},
-        props.artists.future[0] ? {id: props.artists.future[0].id, name: props.artists.future[0].name, region: 'FUTURE', regionIndex: 0} : {},
-        props.artists.future[1] ? {id: props.artists.future[1].id, name: props.artists.future[1].name, region: 'FUTURE', regionIndex: 1} : {},
-        props.artists.future[2] ? {id: props.artists.future[2].id, name: props.artists.future[2].name, region: 'FUTURE', regionIndex: 2} : {}
+        !isEmpty(props.past[props.past.length - 1]) ? {id: props.past[props.past.length - 1].id, name: props.past[props.past.length - 1].name, region: 'PAST', regionIndex: 1} : {},
+        {id: props.present.id, name: props.present.name, region: 'PRESENT', regionIndex: 1},
+        !isEmpty(props.future[0]) ? {id: props.future[0].id, name: props.future[0].name, region: 'FUTURE', regionIndex: 0} : {},
+        !isEmpty(props.future[1]) ? {id: props.future[1].id, name: props.future[1].name, region: 'FUTURE', regionIndex: 1} : {},
+        !isEmpty(props.future[2]) ? {id: props.future[2].id, name: props.future[2].name, region: 'FUTURE', regionIndex: 2} : {}
       ],
       lines: [
-        props.artists.past[props.artists.past.length - 1] ? {from: props.artists.past[props.artists.past.length - 1].id, to: props.artists.present.id} : {},
-        props.artists.future[0] ? {from: props.artists.present.id, to: props.artists.future[0].id} : {},
-        props.artists.future[1] ? {from: props.artists.present.id, to: props.artists.future[1].id} : {},
-        props.artists.future[2] ? {from: props.artists.present.id, to: props.artists.future[2].id} : {}
+        !isEmpty(props.past[props.past.length - 1]) ? {from: props.past[props.past.length - 1].id, to: props.present.id} : {},
+        !isEmpty(props.future[0]) ? {from: props.present.id, to: props.future[0].id} : {},
+        !isEmpty(props.future[1]) ? {from: props.present.id, to: props.future[1].id} : {},
+        !isEmpty(props.future[2]) ? {from: props.present.id, to: props.future[2].id} : {}
       ]
     }
   }
@@ -103,12 +166,13 @@ class NodeGraphContainer extends React.Component {
   }
 
   render () {
+    console.log(this.state)
 
     return (
       <div className="node-graph-wrapper">
         <Back />
         <GithubLink />
-        { this.props.artists.present && !this.props.loading &&
+        { !isEmpty(this.state.present) && !this.props.loading &&
           <Avatar artistAvatarUrl={this.props.artists.present.image}
                 artistVisible={true}
         />
@@ -122,8 +186,8 @@ class NodeGraphContainer extends React.Component {
         />
         }
 
-        { this.props.artists.present && !this.props.loading &&
-          <NodeGraph nodes={this.getNodeAndLines(this.props).nodes} lines={this.getNodeAndLines(this.props).lines} nodeClickHandler={::this.nodeClickHandler}/>
+        { !isEmpty(this.state.present) && !this.props.loading &&
+          <NodeGraph nodes={this.getNodeAndLines(this.state).nodes} lines={this.getNodeAndLines(this.state).lines} nodeClickHandler={::this.nodeClickHandler}/>
         }
 
         { this.props.loading &&
