@@ -1,6 +1,6 @@
 {
   "name": "Mufly",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Discover artists through an infinite node graph on Spotify.",
   "main": "",
   "scripts": {

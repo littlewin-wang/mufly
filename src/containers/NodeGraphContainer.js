@@ -95,7 +95,6 @@ class NodeGraphContainer extends React.Component {
   // 3 - Add new future nodes
   addFutureNodes (nextProps) {
     let future
-
     if (this.state && this.state.future.length) {
       future = this.state.future.map((artist, index) => {
         return artist.id === nextProps.artists.future[index].id ? artist : nextProps.artists.future[index]
@@ -136,8 +135,6 @@ class NodeGraphContainer extends React.Component {
   }
 
   getArtistsAndTracks (id, ignoreId) {
-    console.log('getArtistsAndTracks' + new Date())
-
     let pastId = this.props.artists.past[this.props.artists.past.length - 1] ? this.props.artists.past[this.props.artists.past.length - 1].id : undefined
 
     let calcId = ignoreId ? ignoreId : pastId
