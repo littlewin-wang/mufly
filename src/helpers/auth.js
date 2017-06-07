@@ -1,11 +1,16 @@
 const axios = require('axios')
-
-const AUTH_ROOT = 'http://localhost:3000/auth'
 axios.default.withCredentials = true
 
-// export API interface
+const AUTH_ROOT = 'http://119.29.68.183:7788/'
+
 export default {
   getAuth () {
-    return axios.get(AUTH_ROOT)
+    let instance = axios.create({
+      baseURL: AUTH_ROOT
+    })
+    instance.defaults.headers.common = {
+      'Accept': 'application/json, text/plain, */*'
+    }
+    return instance.get('auth')
   }
 }

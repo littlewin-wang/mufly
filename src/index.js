@@ -9,13 +9,17 @@ import routes from './routes'
 import 'normalize.css'
 import 'styles/index.styl'
 
-// import AUTH from 'helpers/auth'
-// AUTH.getAuth()
-//   .then(res => {
+// import API from 'helpers/api'
+// let searchAPI = API.search('周杰伦','artist')
+// if (searchAPI) {
+//   searchAPI.then(res => {
 //     if (res.statusText === 'OK') {
 //       console.log(res.data)
 //     }
 //   })
+// } else {
+//   console.warn('No valid AUTH_TOKEN.')
+// }
 
 // Render the main component into the dom
 ReactDOM.render(

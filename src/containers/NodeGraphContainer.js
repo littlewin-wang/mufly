@@ -5,6 +5,7 @@ import * as actions from '../actions'
 
 import { browserHistory } from 'react-router'
 import { isEmpty } from 'lodash'
+import AUTH from 'helpers/auth'
 
 import {Avatar, Back, NodeGraph, Samples, GithubLink, Footer } from 'components'
 import Sentry from 'react-activity/lib/Sentry'
@@ -145,26 +146,54 @@ class NodeGraphContainer extends React.Component {
     this.props.actions.GET_TOP_TRACKS(id)
   }
 
-  nodeClickHandler (id) {
-    // If click past node
-    let pastId = this.props.artists.past[this.props.artists.past.length - 1] ? this.props.artists.past[this.props.artists.past.length - 1].id : undefined
-    if (pastId === id) {
-      this.props.actions.RM_PAST_ARTIST()
-      browserHistory.push(`/artist/${id}`)
-      return
+  isTokenValid () {
+    const authToken = JSON.parse(localStorage.getItem('AuthToken'))
+
+    // If there is one and it is valid, do not need do anything
+    if (authToken && (Date.now() < authToken.endTime)) {
+      return true
+    } else {
+      return false
     }
+  }
 
-    // If click future node
-    let artist = this.props.artists.present
-    // if (! this.props.artists.past.some((past) => {
-    //     return past.id === artist.id
-    //   })) {
-    //   this.props.actions.ADD_PAST_ARTIST(artist)
-    // }
+  nodeClickHandler (id) {
+    if (this.isTokenValid()) {
+      // If click past node
+      let pastId = this.props.artists.past[this.props.artists.past.length - 1] ? this.props.artists.past[this.props.artists.past.length - 1].id : undefined
+      if (pastId === id) {
+        this.props.actions.RM_PAST_ARTIST()
+        browserHistory.push(`/artist/${id}`)
+        return
+      }
 
-    this.props.actions.ADD_PAST_ARTIST(artist)
+      // If click future node
+      let artist = this.props.artists.present
+      // if (! this.props.artists.past.some((past) => {
+      //     return past.id === artist.id
+      //   })) {
+      //   this.props.actions.ADD_PAST_ARTIST(artist)
+      // }
 
-    browserHistory.push(`/artist/${id}`)
+      this.props.actions.ADD_PAST_ARTIST(artist)
+
+      browserHistory.push(`/artist/${id}`)
+    } else {
+      AUTH.getAuth().then(res => {
+        if (res.statusText === 'OK') {
+          const expires_in_ms = (res.data.expires_in - 20) * 1000
+          const endTime = Date.now() + expires_in_ms
+
+          const token = {
+            endTime,
+            ...res.data
+          }
+
+          localStorage.setItem('AuthToken', JSON.stringify(token))
+          console.log('Request done')
+        }
+      })
+    }
   }
 
   render () {
