@@ -42,4 +42,7 @@ config.module.loaders.push({
   )
 })
 
+// Modify port in dist mode
+config.port = 80
+
 module.exports = config
