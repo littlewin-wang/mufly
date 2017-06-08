@@ -9,7 +9,7 @@
 ### Introduction
 Mufly is a web app to find artists with the guidance of [related-artists API](https://developer.spotify.com/web-api/console/get-artist-related-artists/) through a node graph.
 
-<p align='center'><img width='400' src='https://ws1.sinaimg.cn/large/62970cabgy1fgdjwzwudtj20tr0ntwfc.jpg' /> <img width='400' src='https://ws1.sinaimg.cn/large/62970cabgy1fgdjcmu6ufj20tx0nv3zl.jpg' /></p>
+<img width='400' src='https://ws1.sinaimg.cn/large/62970cabgy1fgdjwzwudtj20tr0ntwfc.jpg' /> <img width='400' src='https://ws1.sinaimg.cn/large/62970cabgy1fgdjcmu6ufj20tx0nv3zl.jpg' />
 
 ### Feature
 - Product of React
