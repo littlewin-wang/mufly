@@ -89,7 +89,7 @@ export const GET_SEARCH_RESULTS = (q, type) => {
         }
       })
     } else {
-      // To do - Mark a status
+      // TODO: Mark a status
       return
     }
   })
@@ -152,13 +152,13 @@ export const GET_PRESENT_ARTIST = (id, ignoreId) => {
           } else {
             // End loading to unshow the sentry component
             dispatch(END_LOADING())
-            // To do - Mark a status
+            // TODO: Mark a status
             return
           }
         }
       })
     } else {
-      // To do - Mark a status
+      // TODO: Mark a status
       return
     }
   })
@@ -192,10 +192,10 @@ export const GET_TOP_TRACKS = (id) => {
     if (api) {
       api.then(res => {
         if (res.statusText === 'OK') {
-          // Hack - In case that there is no tracks
+          // HACK: In case that there is no tracks
           if (res.data.tracks && res.data.tracks.length != 0) {
             let tracks = []
-            // Hack - In case that there is less than 3 tracks
+            // HACK: In case that there is less than 3 tracks
             let len = res.data.tracks.length < 3 ? res.data.tracks.length : 3
             for (let i = 0; i < len; i++) {
               let track = {id: res.data.tracks[i].id, name: res.data.tracks[i].name, url: res.data.tracks[i].preview_url}
@@ -208,7 +208,7 @@ export const GET_TOP_TRACKS = (id) => {
         }
       })
     } else  {
-      // To do - Mark a status
+      // TODO: Mark a status
       return
     }
   })
