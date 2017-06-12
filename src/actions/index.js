@@ -1,4 +1,5 @@
 import API from 'helpers/api'
+const DEFAULT_AVATAR = 'https://raw.githubusercontent.com/littlewin-wang/mufly/master/image/default-avatar.png'
 
 export const GET_SEARCH = (suggestions) => {
   return {
@@ -69,19 +70,26 @@ export const GET_PLAYING = (playing) => {
   }
 }
 
+/**
+ * Get the search result and dispatch them to suggestion
+ * @param {String} q - The string want to search
+ * @param {String} type - The type want to search
+ */
 export const GET_SEARCH_RESULTS = (q, type) => {
   return (dispatch => {
     let api = API.search(q, type)
     if (api) {
+      // Start loading, and show the spinner component
       dispatch(START_LOADING())
       api.then(res => {
         if (res.statusText === 'OK') {
           dispatch(GET_SEARCH(res.data.artists.items))
+          // End loading to unshow the spinner component
           dispatch(END_LOADING())
         }
       })
     } else {
-      // Mark a status
+      // To do - Mark a status
       return
     }
   })
@@ -94,6 +102,11 @@ export const CLEAR_SEARCH_RESULTS = () => {
   })
 }
 
+/**
+ * Get the present artist and related-artists of the present
+ * @param {String} id - The id of present artist
+ * @param {String} ignoreId - The id of ignore artist
+ */
 export const GET_PRESENT_ARTIST = (id, ignoreId) => {
   let artists = {
     present: {},
@@ -103,40 +116,49 @@ export const GET_PRESENT_ARTIST = (id, ignoreId) => {
   return (dispatch => {
     let api = API.artists(id)
     if (api) {
+      // Start loading, and show the sentry component
       dispatch(START_LOADING())
       api.then(res => {
         if (res.statusText === 'OK') {
-          let imgUrl = res.data.images.length ? res.data.images[0].url : 'https://raw.githubusercontent.com/littlewin-wang/mufly/master/image/default-avatar.png'
+          // Hack - In case that there is no images property
+          let imgUrl = res.data.images.length ? res.data.images[0].url : DEFAULT_AVATAR
           artists.present = {id: id, name: res.data.name, image: imgUrl}
+
+          // Find the related artists
           let apiInner = API.releatedArtists(id)
           if (apiInner) {
             apiInner.then(res => {
               if (res.statusText === 'OK') {
                 if (res.data.artists && res.data.artists.length) {
                   for (let i = 0; i < res.data.artists.length; i++) {
-                    imgUrl = res.data.artists[i].images.length ? res.data.artists[i].images[0].url : 'https://raw.githubusercontent.com/littlewin-wang/mufly/master/image/default-avatar.png'
+                    // Hack - In case that there is no images property
+                    imgUrl = res.data.artists[i].images.length ? res.data.artists[i].images[0].url : DEFAULT_AVATAR
                     let artist = {id: res.data.artists[i].id, name: res.data.artists[i].name, image: imgUrl}
+                    // Need to ignore some id
                     if (artist.id !== ignoreId) {
                       artists.future.push(artist)
                     }
+                    // Need 3 artists at most
                     if (artists.future.length === 3) {
                       break
                     }
                   }
                 }
+                // End loading to unshow the sentry component
                 dispatch(END_LOADING())
                 dispatch(GET_PRESENT(artists))
               }
             })
           } else {
+            // End loading to unshow the sentry component
             dispatch(END_LOADING())
-            // Mark a status
+            // To do - Mark a status
             return
           }
         }
       })
     } else {
-      // Mark a status
+      // To do - Mark a status
       return
     }
   })
@@ -160,14 +182,20 @@ export const CLEAR_PAST_ARTISTS = () => {
   }
 }
 
+/**
+ * Get the top tracks of the present artist
+ * @param {String} id - The id of present artist
+ */
 export const GET_TOP_TRACKS = (id) => {
   return (dispatch => {
     let api = API.topTracks(id)
     if (api) {
       api.then(res => {
         if (res.statusText === 'OK') {
+          // Hack - In case that there is no tracks
           if (res.data.tracks && res.data.tracks.length != 0) {
             let tracks = []
+            // Hack - In case that there is less than 3 tracks
             let len = res.data.tracks.length < 3 ? res.data.tracks.length : 3
             for (let i = 0; i < len; i++) {
               let track = {id: res.data.tracks[i].id, name: res.data.tracks[i].name, url: res.data.tracks[i].preview_url}
@@ -180,7 +208,7 @@ export const GET_TOP_TRACKS = (id) => {
         }
       })
     } else  {
-      // Mark a status
+      // To do - Mark a status
       return
     }
   })
