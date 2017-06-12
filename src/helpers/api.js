@@ -19,6 +19,10 @@ const formatToken = ((token) => {
   }
 })
 
+/**
+ * Get the token from proxy server if need
+ * And store the auth in localStorage
+ */
 const getAndStoreToken = (() => {
   const authToken = JSON.parse(localStorage.getItem('AuthToken'))
 
@@ -36,6 +40,8 @@ const getAndStoreToken = (() => {
 
   AUTH.getAuth().then(res => {
     if (res.statusText === 'OK') {
+      // Consider that the process takes some seconds
+      // the calculation takes away 20s to get the end time of the token.
       const expires_in_ms = (res.data.expires_in - 20) * 1000
       const endTime = Date.now() + expires_in_ms
 
