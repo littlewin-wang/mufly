@@ -5,7 +5,7 @@ import * as actions from '../actions'
 
 import { browserHistory } from 'react-router'
 
-import { SearchBox, RecentSearch, GithubLink, Footer } from 'components'
+import { SearchBox, RecentSearch, GithubLink, Footer, Modal } from 'components'
 
 class SearchContainer extends React.Component {
   constructor (props) {
@@ -21,9 +21,10 @@ class SearchContainer extends React.Component {
   }
 
   formatSuggestions (arr) {
+    const MAX_NUM = 8
     if (arr) {
       let retArr = []
-      let len = arr.length > 8 ? 8 : arr.length
+      let len = arr.length > MAX_NUM ? MAX_NUM : arr.length
 
       for (let i = 0; i < len; i++) {
         let suggestion = {
@@ -61,6 +62,7 @@ class SearchContainer extends React.Component {
         />
         <RecentSearch recents={recents}/>
         <Footer />
+        <Modal />
       </div>
     )
   }
