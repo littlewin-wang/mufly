@@ -14,10 +14,12 @@ export default class AudioPlayer extends React.Component {
     }
   }
 
+  // Calc the percentage of the play procee
   percentCalc () {
     return this._audio.currentTime / this._audio.duration * 100
   }
 
+  // Get the buffered status of the audio
   bufferHandler () {
     if (this.state.ready) {
       this.setState({
@@ -25,7 +27,7 @@ export default class AudioPlayer extends React.Component {
       })
     }
   }
-
+  
   playHandler () {
     this.setState({
       percent: this.percentCalc()
@@ -54,12 +56,14 @@ export default class AudioPlayer extends React.Component {
     }
   }
 
+  // Change the currentTime of audio
   TrackClickHandler (percent) {
     if (this.state.ready) {
       this._audio.currentTime = this._audio.duration * percent / 100
     }
   }
 
+  // When finished, init the play mode
   endHandler () {
     this.setState({
       mode: 'play',

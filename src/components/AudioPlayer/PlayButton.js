@@ -27,6 +27,7 @@ export default class PlayButton extends React.Component {
     buffered: {}
   }
 
+  // Calc the percent based on the click position
   handleTrackClick = (e) => {
     const mouseX = e.pageX - e.currentTarget.getBoundingClientRect().left
     const mouseY = e.pageY - e.currentTarget.getBoundingClientRect().top
