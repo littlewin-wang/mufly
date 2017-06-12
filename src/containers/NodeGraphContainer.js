@@ -7,7 +7,7 @@ import { browserHistory } from 'react-router'
 import { isEmpty } from 'lodash'
 import AUTH from 'helpers/auth'
 
-import {Avatar, Back, NodeGraph, Samples, GithubLink, Footer } from 'components'
+import {Avatar, Back, NodeGraph, Samples, GithubLink, Footer, Modal } from 'components'
 import Sentry from 'react-activity/lib/Sentry'
 
 class NodeGraphContainer extends React.Component {
@@ -176,6 +176,8 @@ class NodeGraphContainer extends React.Component {
 
       browserHistory.push(`/artist/${id}`)
     } else {
+      console.log('[INFO] ', 'Request - Get a new token ', new Date().toLocaleString())
+      this.props.actions.START_REQUESTING_PROCESS()
       AUTH.getAuth().then(res => {
         if (res.statusText === 'OK') {
           const expires_in_ms = (res.data.expires_in - 20) * 1000
@@ -187,7 +189,8 @@ class NodeGraphContainer extends React.Component {
           }
 
           localStorage.setItem('AuthToken', JSON.stringify(token))
-          console.log('Request done')
+          console.log('[INFO] ', 'Request - Done ', new Date().toLocaleString())
+          this.props.actions.END_REQUESTING_PROCESS()
         }
       })
     }
@@ -221,6 +224,10 @@ class NodeGraphContainer extends React.Component {
         }
 
         <Footer />
+
+        { this.props.requesting &&
+          <Modal />
+        }
       </div>
     )
   }
@@ -231,7 +238,8 @@ const mapStateToProps = (state) => {
     artists: state.artists,
     tracks: state.tracks,
     loading: state.loading,
-    playing: state.playing
+    playing: state.playing,
+    requesting: state.requesting
   }
 }
 

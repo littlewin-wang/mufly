@@ -69,4 +69,17 @@ const playing = (state = '', action) => {
   }
 }
 
-export { suggestions, loading, artists, tracks, playing }
+const requesting = (state = false, action) => {
+  switch (action.type) {
+    case 'START_REQUESTING':
+      return true
+
+    case 'END_REQUESTING':
+      return false
+
+    default:
+      return state
+  }
+}
+
+export { suggestions, loading, artists, tracks, playing, requesting }

@@ -70,6 +70,20 @@ export const GET_PLAYING = (playing) => {
   }
 }
 
+export const START_REQUESTING = (requesting) => {
+  return {
+    type: 'START_REQUESTING',
+    requesting
+  }
+}
+
+export const END_REQUESTING = (requesting) => {
+  return {
+    type: 'END_REQUESTING',
+    requesting
+  }
+}
+
 /**
  * Get the search result and dispatch them to suggestion
  * @param {String} q - The string want to search
@@ -89,7 +103,10 @@ export const GET_SEARCH_RESULTS = (q, type) => {
         }
       })
     } else {
-      // TODO: Mark a status
+      dispatch(START_REQUESTING())
+      setTimeout(()=> {
+        dispatch(END_REQUESTING())
+      }, 2000)
       return
     }
   })
@@ -152,13 +169,19 @@ export const GET_PRESENT_ARTIST = (id, ignoreId) => {
           } else {
             // End loading to unshow the sentry component
             dispatch(END_LOADING())
-            // TODO: Mark a status
+            dispatch(START_REQUESTING())
+            setTimeout(()=> {
+              dispatch(END_REQUESTING())
+            }, 2000)
             return
           }
         }
       })
     } else {
-      // TODO: Mark a status
+      dispatch(START_REQUESTING())
+      setTimeout(()=> {
+        dispatch(END_REQUESTING())
+      }, 2000)
       return
     }
   })
@@ -208,7 +231,10 @@ export const GET_TOP_TRACKS = (id) => {
         }
       })
     } else  {
-      // TODO: Mark a status
+      dispatch(START_REQUESTING())
+      setTimeout(()=> {
+        dispatch(END_REQUESTING())
+      }, 2000)
       return
     }
   })
@@ -218,4 +244,16 @@ export const GET_PLAYING_TRACK = (id) => {
   return (dispatch => {
     dispatch(GET_PLAYING(id))
   })
+}
+
+export const START_REQUESTING_PROCESS = () => {
+  return dispatch => {
+    dispatch(START_REQUESTING())
+  }
+}
+
+export const END_REQUESTING_PROCESS = () => {
+  return dispatch => {
+    dispatch(END_REQUESTING())
+  }
 }

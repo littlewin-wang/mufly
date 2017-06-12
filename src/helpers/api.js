@@ -36,7 +36,7 @@ const getAndStoreToken = (() => {
   isGetting = true
 
   // Request to get a new token
-  console.log('Request to get a new token')
+  console.log('[INFO] ', 'Request - Get a new token ', new Date().toLocaleString())
 
   AUTH.getAuth().then(res => {
     if (res.statusText === 'OK') {
@@ -51,7 +51,7 @@ const getAndStoreToken = (() => {
       }
 
       localStorage.setItem('AuthToken', JSON.stringify(token))
-      console.log('Request done')
+      console.log('[INFO] ', 'Request - Done ', new Date().toLocaleString())
       isGetting = false
     }
   })

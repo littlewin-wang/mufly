@@ -59,10 +59,13 @@ class SearchContainer extends React.Component {
                    suggestions={this.formatSuggestions(this.props.suggestions)}
                    loading={this.props.loading}
                    confirmSelectSuggestion={::this.confirmSelectSuggestion}
+                   readOnly={this.props.requesting}
         />
         <RecentSearch recents={recents}/>
         <Footer />
-        <Modal />
+        { this.props.requesting &&
+          <Modal />
+        }
       </div>
     )
   }
@@ -71,7 +74,8 @@ class SearchContainer extends React.Component {
 const mapStateToProps = (state) => {
   return {
     suggestions: state.suggestions,
-    loading: state.loading
+    loading: state.loading,
+    requesting: state.requesting
   }
 }
 

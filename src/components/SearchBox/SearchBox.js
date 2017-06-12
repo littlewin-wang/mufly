@@ -22,7 +22,8 @@ export default class SearchBox extends React.Component {
     loading: PropTypes.bool,
     requestSearchSuggestions: PropTypes.func,
     clearSearchInput: PropTypes.func,
-    confirmSelectSuggestion: PropTypes.func
+    confirmSelectSuggestion: PropTypes.func,
+    readOnly: PropTypes.bool
   }
 
   static defaultProps = {
@@ -93,6 +94,7 @@ export default class SearchBox extends React.Component {
           className="search-input"
           onChange={::this.changeHandler}
           onKeyUp={::this.ctrlHandler}
+          readOnly={this.props.readOnly}
           ref={(i) => this._input = i}
         />
         <Suggestions suggestions={this.props.suggestions}
