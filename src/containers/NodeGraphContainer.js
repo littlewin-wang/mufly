@@ -27,10 +27,12 @@ class NodeGraphContainer extends React.Component {
   }
 
   componentWillReceiveProps (nextProps) {
+    // If the routeParams changes, then we call func to get API
     if (this.props.routeParams.id !== nextProps.routeParams.id) {
       this.getArtistsAndTracks(nextProps.routeParams.id)
     }
 
+    // If the artist nodes in page need change
     if (!nextProps.loading && this.props.artists !== nextProps.artists) {
       this.rmFutureNodes(nextProps)
 
@@ -135,6 +137,7 @@ class NodeGraphContainer extends React.Component {
   }
 
   getArtistsAndTracks (id, ignoreId) {
+    //HACK: Can never let the same artist exist in past and future
     let pastId = this.props.artists.past[this.props.artists.past.length - 1] ? this.props.artists.past[this.props.artists.past.length - 1].id : undefined
 
     let calcId = ignoreId ? ignoreId : pastId
