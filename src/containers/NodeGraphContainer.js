@@ -38,11 +38,11 @@ class NodeGraphContainer extends React.Component {
 
       setTimeout(() => {
         this.adjustPresentNode(nextProps)
-      }, 500)
+      }, 800)
 
       setTimeout(() => {
         this.addFutureNodes(nextProps)
-      }, 1000)
+      }, 1500)
     }
   }
 
@@ -82,10 +82,15 @@ class NodeGraphContainer extends React.Component {
 
         this.setState({
           past: past,
-          future: nextProps.artists.future.map((artist) => {
-            return artist.id === this.state.present.id ? artist : {}
+          future: nextProps.artists.future.map((artist, index) => {
+            return artist.id === this.state.present.id ? artist : ((artist) => {
+              artist.isShow = false
+              return artist
+            })(nextProps.artists.future[index])
           })
         })
+
+        console.log(this.state.future)
       }
     }
 
@@ -99,7 +104,10 @@ class NodeGraphContainer extends React.Component {
     let future
     if (this.state && this.state.future.length) {
       future = this.state.future.map((artist, index) => {
-        return artist.id === nextProps.artists.future[index].id ? artist : nextProps.artists.future[index]
+        return artist.isShow === true ? artist : ((artist) => {
+          artist.isShow = true
+          return artist
+        })(nextProps.artists.future[index])
       })
     } else {
       future = nextProps.artists.future

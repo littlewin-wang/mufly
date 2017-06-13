@@ -139,7 +139,7 @@ export const GET_PRESENT_ARTIST = (id, ignoreId) => {
         if (res.statusText === 'OK') {
           // Hack - In case that there is no images property
           let imgUrl = res.data.images.length ? res.data.images[0].url : DEFAULT_AVATAR
-          artists.present = {id: id, name: res.data.name, image: imgUrl}
+          artists.present = {id: id, name: res.data.name, image: imgUrl, isShow: true}
 
           // Find the related artists
           let apiInner = API.releatedArtists(id)
@@ -150,7 +150,7 @@ export const GET_PRESENT_ARTIST = (id, ignoreId) => {
                   for (let i = 0; i < res.data.artists.length; i++) {
                     // Hack - In case that there is no images property
                     imgUrl = res.data.artists[i].images.length ? res.data.artists[i].images[0].url : DEFAULT_AVATAR
-                    let artist = {id: res.data.artists[i].id, name: res.data.artists[i].name, image: imgUrl}
+                    let artist = {id: res.data.artists[i].id, name: res.data.artists[i].name, image: imgUrl, isShow: true}
                     // Need to ignore some id
                     if (artist.id !== ignoreId) {
                       artists.future.push(artist)

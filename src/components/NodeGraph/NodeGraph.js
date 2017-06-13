@@ -166,7 +166,7 @@ export default class NodeGraph extends React.Component {
                 artist={{id: node.id, name: node.name}}
                 region={node.region}
                 radius={node.radius}
-                // rejected={false}
+                rejected={false}
                 x={node.x}
                 y={node.y}
                 nodeClickHandler={::this.props.nodeClickHandler}
